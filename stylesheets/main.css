@@ -1,0 +1,28 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: "Helvetica", "Arial", Sans-Serif;
+	min-width: 600px;
+}
+
+h1 {
+	text-align: center;
+}
+
+#controls-info ol {
+	padding-left: 10px;
+	font-weight: bold;
+}
+
+#canvas-container {
+    margin-right: auto;
+    margin-left: auto;
+    width: 600px;
+}
+
+canvas {
+	border: 1px solid blue;
+}
