@@ -155,7 +155,9 @@ $(function() {
 			player.cornerPositions.top.y -= player.movingSpeed;
 			player.cornerPositions.bottomRight.y -= player.movingSpeed;
 			player.cornerPositions.bottomLeft.y -= player.movingSpeed;
-		} else if (player.movingDirectionY === directions.down && playerIsAboveCanvasBottomBorder(player, canvas)) {
+		}
+
+		if (player.movingDirectionY === directions.down && playerIsAboveCanvasBottomBorder(player, canvas)) {
 			player.cornerPositions.top.y += player.movingSpeed;
 			player.cornerPositions.bottomRight.y += player.movingSpeed;
 			player.cornerPositions.bottomLeft.y += player.movingSpeed;
@@ -165,7 +167,9 @@ $(function() {
 			player.cornerPositions.top.x -= player.movingSpeed;
 			player.cornerPositions.bottomRight.x -= player.movingSpeed;
 			player.cornerPositions.bottomLeft.x -= player.movingSpeed;
-		} else if (player.movingDirectionX === directions.right && playerIsToTheLeftOfCanvasRightBorder(player, canvas)) {
+		}
+
+		if (player.movingDirectionX === directions.right && playerIsToTheLeftOfCanvasRightBorder(player, canvas)) {
 			player.cornerPositions.top.x += player.movingSpeed;
 			player.cornerPositions.bottomRight.x += player.movingSpeed;
 			player.cornerPositions.bottomLeft.x += player.movingSpeed;
@@ -210,8 +214,6 @@ $(function() {
 			for (var i = 0; i < collidingEnemyBlocksIds.length; i++) {
 				reduceEnemyBlockHP(bullet, collidingEnemyBlocksIds[i]);
 			}
-
-			console.log("Accumulated bullet damage is : " + accumulatedDamageDoneToBulletInAllBlockCollisions);
 
 			bullet.damage -= accumulatedDamageDoneToBulletInAllBlockCollisions;
 

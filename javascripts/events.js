@@ -1,43 +1,88 @@
 function addKeyListeners(keyCodes, player, directions) {
-	$(document).keydown(arrowKeyPressListener);
-	$(document).keyup(arrowKeyReleaseListener);
+	var verticalArrowKeyDirectionsHeldDown = [],
+		horizontalArrowKeyDirectionsHeldDown = [];
+
+	$(document).keydown(arrowKeyDownListener);
+	$(document).keyup(arrowKeyUpListener);
 
 	$(document).keydown(chargeShotInitializerListener);
 	$(document).keyup(chargeShotReleaseListener);
 
 	$(document).keydown(weaponSwitchListener);
 
-	function arrowKeyPressListener(event) {
+	function arrowKeyDownListener(event) {
 		switch (event.which) {
 			case keyCodes.up:
-				player.movingDirectionY = directions.up;
+				if (verticalArrowKeyDirectionsHeldDown.indexOf(directions.up) === -1) {
+					verticalArrowKeyDirectionsHeldDown.push(directions.up);
+					player.movingDirectionY = directions.up;
+				}
 				break;
 			case keyCodes.down:
-				player.movingDirectionY = directions.down;
+				if (verticalArrowKeyDirectionsHeldDown.indexOf(directions.down) === -1) {
+					verticalArrowKeyDirectionsHeldDown.push(directions.down);
+					player.movingDirectionY = directions.down;
+				}
 				break;
 			case keyCodes.left:
-				player.movingDirectionX = directions.left;
+				if (horizontalArrowKeyDirectionsHeldDown.indexOf(directions.left) === -1) {
+					horizontalArrowKeyDirectionsHeldDown.push(directions.left);
+					player.movingDirectionX = directions.left;
+				}
+
 				break;
 			case keyCodes.right:
-				player.movingDirectionX = directions.right;
+				if (horizontalArrowKeyDirectionsHeldDown.indexOf(directions.right) === -1) {
+					horizontalArrowKeyDirectionsHeldDown.push(directions.right);
+					player.movingDirectionX = directions.right;
+				}
 				break;
 		}
 	}
 
-	function arrowKeyReleaseListener(event) {
-		switch (event.which) {
-			case keyCodes.up:
+	function arrowKeyUpListener(event) {
+		if (getKeyReleasedIsAVerticalArrowKey(event.which)) {
+			if (event.which === keyCodes.up) {
+				removeHeldDownVerticalKey(directions.up);
+			} else if (event.which === keyCodes.down) {
+				removeHeldDownVerticalKey(directions.down);
+			}
+
+			if (verticalArrowKeyDirectionsHeldDown.length === 0) {
 				player.movingDirectionY = undefined;
-				break;
-			case keyCodes.down:
-				player.movingDirectionY = undefined;
-				break;
-			case keyCodes.left:
+			} else {
+				player.movingDirectionY = verticalArrowKeyDirectionsHeldDown[0];
+			}
+		} else if (getKeyReleasedIsAHorizontalArrowKey(event.which)) {
+			if (event.which === keyCodes.left) {
+				removeHeldDownHorizontalKey(directions.left);
+			} else if (event.which === keyCodes.right) {
+				removeHeldDownHorizontalKey(directions.right);
+			}
+
+			if (horizontalArrowKeyDirectionsHeldDown.length === 0) {
 				player.movingDirectionX = undefined;
-				break;
-			case keyCodes.right:
-				player.movingDirectionX = undefined;
-				break;
+			} else {
+				player.movingDirectionX = horizontalArrowKeyDirectionsHeldDown[0];
+			}
+		}
+
+		function getKeyReleasedIsAVerticalArrowKey(keyCode) {
+			return keyCode === keyCodes.up ||
+				keyCode === keyCodes.down;
+		}
+
+		function getKeyReleasedIsAHorizontalArrowKey(keyCode) {
+			return keyCode === keyCodes.left ||
+				keyCode === keyCodes.right;
+		}
+
+		function removeHeldDownVerticalKey(verticalDirection) {
+			verticalArrowKeyDirectionsHeldDown.splice(verticalArrowKeyDirectionsHeldDown.indexOf(verticalDirection), 1);
+		}
+
+		function removeHeldDownHorizontalKey(horizontalDirection) {
+			horizontalArrowKeyDirectionsHeldDown.splice(horizontalArrowKeyDirectionsHeldDown.indexOf(horizontalDirection), 1);
 		}
 	}
 
