@@ -16,7 +16,7 @@ $(function() {
 		for (var row = 0; row < 3; row++) {
 			var currentRowEnemyBlockXPosition = 50,
 				newBlockFitsOnRow = true,
-				currentRowEnemyHP = Math.ceil(Math.random() * 50) + 20;
+				currentRowEnemyHP = Math.ceil(Math.random() * 20) + 15;
 
 			while (newBlockFitsOnRow) {
 				var enemyBlock = {
@@ -93,7 +93,8 @@ $(function() {
 		}, {
 			type: "bomb",
 			color: "red",
-			radius: 150,
+			radius: 100,
+			damage: 200,
 			movingSpeed: 6,
 			isChargable: false
 		}],
@@ -129,14 +130,15 @@ $(function() {
 		player.isCharging = true;
 	};
 
-	player.releaseBullet = function() {
-		player.isCharging = false;
+	player.shootBullet = function() {
+		if (player.isCharging) {
+			player.isCharging = false;
+			player.selectedWeapon.damage = player.selectedWeapon.radius / 2;
+		}
 
 		player.selectedWeapon.x = player.cornerPositions.top.x;
 		player.selectedWeapon.y = player.cornerPositions.top.y - player.selectedWeapon.radius;
 		player.selectedWeapon.color = player.color;
-
-		player.selectedWeapon.damage = player.selectedWeapon.radius / 2;
 
 		console.log(player.selectedWeapon.damage);
 
@@ -195,30 +197,33 @@ $(function() {
 			if (collidingEnemyBlocksIds.length > 0) {
 				updateObjectsInCollision(bulletIndex, collidingEnemyBlocksIds);
 			} else if (getBulletIsOutsideOfCanvasBorder(bullets[bulletIndex])) {
-				bullets.splice(bulletIndex, 1);
+				killBullet(bulletIndex);
 			} else {
 				bullets[bulletIndex].y -= bullets[bulletIndex].movingSpeed;
 			}
 		}
 
 		function updateObjectsInCollision(bulletIndex, collidingEnemyBlocksIds) {
-			var accumulatedDamageDoneToBullet = 0,
-				bullet = bullets[bulletIndex];
+			var bullet = bullets[bulletIndex],
+				accumulatedDamageDoneToBulletInAllBlockCollisions = 0;
 
 			for (var i = 0; i < collidingEnemyBlocksIds.length; i++) {
 				reduceEnemyBlockHP(bullet, collidingEnemyBlocksIds[i]);
 			}
 
-			if (accumulatedDamageDoneToBullet >= bullet.damage) {
+			bullet.damage -= accumulatedDamageDoneToBulletInAllBlockCollisions;
+
+			if (bullet.damage <= 0) {
 				killBullet(bulletIndex);
 			}
 
 			function reduceEnemyBlockHP(bullet, enemyBlockId) {
-				var enemyBlock = enemyBlocks[enemyBlockId];
-
-				accumulatedDamageDoneToBullet += Math.abs(bullet.damage - enemyBlock.hp);
+				var enemyBlock = enemyBlocks[enemyBlockId],
+					damageDoneToBulletInBlockCollision = Math.abs(bullet.damage - enemyBlock.hp);
 
 				enemyBlock.hp -= bullet.damage;
+
+				accumulatedDamageDoneToBulletInAllBlockCollisions += damageDoneToBulletInBlockCollision;
 
 				if (enemyBlock.hp <= 0) {
 					delete enemyBlocks[enemyBlockId];
@@ -227,10 +232,10 @@ $(function() {
 					console.log("Block HP is: " + enemyBlock.hp);
 				}
 			}
+		}
 
-			function killBullet(bulletIndex) {
-				bullets.splice(bulletIndex, 1);
-			}
+		function killBullet(bulletIndex) {
+			bullets.splice(bulletIndex, 1);
 		}
 
 		function getBulletIsOutsideOfCanvasBorder(bullet) {
@@ -246,14 +251,12 @@ $(function() {
 		moveBullets();
 
 		if (player.isCharging) {
-			player.selectedWeapon.radius += 0.20;
+			player.selectedWeapon.radius += 0.30;
 		}
 
 		renderPlayer(player, player.isCharging, context);
 		renderBullets(player, bullets, context);
 		renderEnemyBlocks(enemyBlocks, context);
-
-		console.log("Bullets: " + bullets.length + ", blocks: " + enemyBlocks.length);
 	}
 
 	function addEnemyBlock() {
