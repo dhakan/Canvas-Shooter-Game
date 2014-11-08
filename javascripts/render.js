@@ -11,7 +11,7 @@ function renderPlayerMovingRestrictionBarrier(movingRestrictionBarrier, context,
 
 function renderPlayer(player, isCharging, context) {
 	if (isCharging) {
-		animateCharge();
+		setPlayerColorAccordingToChargingStage();
 	} else {
 		player.color = "white";
 	}
@@ -24,7 +24,7 @@ function renderPlayer(player, isCharging, context) {
 	context.lineTo(player.cornerPositions.bottomLeft.x, player.cornerPositions.bottomLeft.y);
 	context.fill();
 
-	function animateCharge() {
+	function setPlayerColorAccordingToChargingStage() {
 		if (player.selectedWeapon.radius >= 10 && player.selectedWeapon.radius < 20) {
 			player.color = "yellow";
 		} else if (player.selectedWeapon.radius >= 20 && player.selectedWeapon.radius < 30) {

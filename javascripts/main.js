@@ -211,6 +211,8 @@ $(function() {
 				reduceEnemyBlockHP(bullet, collidingEnemyBlocksIds[i]);
 			}
 
+			console.log("Accumulated bullet damage is : " + accumulatedDamageDoneToBulletInAllBlockCollisions);
+
 			bullet.damage -= accumulatedDamageDoneToBulletInAllBlockCollisions;
 
 			if (bullet.damage <= 0) {
@@ -219,7 +221,7 @@ $(function() {
 
 			function reduceEnemyBlockHP(bullet, enemyBlockId) {
 				var enemyBlock = enemyBlocks[enemyBlockId],
-					damageDoneToBulletInBlockCollision = Math.abs(bullet.damage - enemyBlock.hp);
+					damageDoneToBulletInBlockCollision = enemyBlock.hp;
 
 				enemyBlock.hp -= bullet.damage;
 
@@ -227,9 +229,6 @@ $(function() {
 
 				if (enemyBlock.hp <= 0) {
 					delete enemyBlocks[enemyBlockId];
-					console.log("Block was destroyed!");
-				} else {
-					console.log("Block HP is: " + enemyBlock.hp);
 				}
 			}
 		}
