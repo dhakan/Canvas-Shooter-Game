@@ -21,20 +21,12 @@ var game = (function() {
 
 	var player = {
 		color: "white",
-		cornerPositions: {
-			top: {
-				x: canvas.width / 2,
-				y: canvas.height - 50
-			},
-			bottomRight: {
-				x: canvas.width / 2 + 15,
-				y: canvas.height - 25
-			},
-			bottomLeft: {
-				x: canvas.width / 2 - 15,
-				y: canvas.height - 25
-			}
+		positions: {
+			x: 0,
+			y: 0
 		},
+		width: 55,
+		height: 70,
 		movingDirectionX: undefined,
 		movingDirectionY: undefined,
 		movingSpeed: 5,
@@ -61,6 +53,7 @@ var game = (function() {
 		LAST_WEAPON: player.weaponArsenal.length - 1
 	};
 
+	/* DO WE NEED THIS? */
 	var movingRestrictionBarrier = {
 		color: "gray",
 		x: 0,
@@ -80,17 +73,28 @@ var game = (function() {
 	var render = {};
 
 	var images = (function() {
-		var image = new Image();
-		image.src = "sprites/background.jpg";
+		var backgroundImage = new Image();
+
+		backgroundImage.src = "sprites/background.jpg";
 
 		var background = {
-			image: image,
+			image: backgroundImage,
 			x: 0,
-			y: 0
+			y: 0,
+			movingSpeed: 2
+		};
+
+		var shipImage = new Image();
+
+		shipImage.src = "sprites/ship.png";
+
+		var ship = {
+			image: shipImage
 		};
 
 		return {
-			background: background
+			background: background,
+			ship: ship
 		};
 	}());
 

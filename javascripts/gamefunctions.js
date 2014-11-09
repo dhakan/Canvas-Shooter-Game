@@ -1,6 +1,6 @@
 game.runGameLoop = function() {
 	game.render.renderBackground();
-	game.render.renderPlayerMovingRestrictionBarrier();
+	// game.render.renderPlayerMovingRestrictionBarrier();
 
 	game.player.move();
 	game.moveBullets();

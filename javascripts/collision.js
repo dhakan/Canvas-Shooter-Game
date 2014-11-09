@@ -1,17 +1,18 @@
 game.collision.playerIsAboveCanvasBottomBorder = function() {
-	return game.player.cornerPositions.bottomRight.y < game.canvas.height;
+	return game.player.positions.y + game.player.height < game.canvas.height;
 };
 
+/* DO WE NEED THIS? */
 game.collision.playerIsBelowMovingRestrictionBarrier = function() {
-	return game.player.cornerPositions.top.y > game.movingRestrictionBarrier.y + game.movingRestrictionBarrier.height;
+	return game.player.positions.y > game.movingRestrictionBarrier.y + game.movingRestrictionBarrier.height;
 };
 
 game.collision.playerIsToTheLeftOfCanvasRightBorder = function() {
-	return game.player.cornerPositions.bottomRight.x < game.canvas.width;
+	return game.player.positions.x + game.player.width - 5 < game.canvas.width;
 };
 
 game.collision.playerIsToTheRightOfCanvasLeftBorder = function() {
-	return game.player.cornerPositions.bottomLeft.x > 0;
+	return game.player.positions.x + 5 > 0;
 };
 
 /*

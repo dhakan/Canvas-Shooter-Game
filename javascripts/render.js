@@ -1,11 +1,11 @@
 game.render.renderBackground = function() {
-	game.canvasContext.drawImage(game.images.background.image, game.images.background.x, game.images.background.y);
-	game.canvasContext.drawImage(game.images.background.image, game.images.background.x, game.images.background.y - game.canvas.height);
+	game.canvasContext.drawImage(game.images.background.image, game.images.background.x, game.images.background.y, game.canvas.width, game.canvas.height);
+	game.canvasContext.drawImage(game.images.background.image, game.images.background.x, game.images.background.y - game.canvas.height, game.canvas.width, game.canvas.height);
 
 	if (game.images.background.y >= game.canvas.height) {
 		game.images.background.y = 0;
 	}
-	game.images.background.y++;
+	game.images.background.y += game.images.background.movingSpeed;
 };
 
 game.render.renderPlayerMovingRestrictionBarrier = function() {
@@ -15,19 +15,21 @@ game.render.renderPlayerMovingRestrictionBarrier = function() {
 };
 
 game.render.renderPlayer = function() {
-	if (game.player.isCharging) {
-		setPlayerColorAccordingToChargingStage();
-	} else {
-		game.player.color = "white";
-	}
+	// if (game.player.isCharging) {
+	// 	setPlayerColorAccordingToChargingStage();
+	// } else {
+	// 	game.player.color = "white";
+	// }
 
-	game.canvasContext.fillStyle = game.player.color;
+	game.canvasContext.drawImage(game.images.ship.image, game.player.positions.x, game.player.positions.y, game.player.width, game.player.height);
 
-	game.canvasContext.beginPath();
-	game.canvasContext.moveTo(game.player.cornerPositions.top.x, game.player.cornerPositions.top.y);
-	game.canvasContext.lineTo(game.player.cornerPositions.bottomRight.x, game.player.cornerPositions.bottomRight.y);
-	game.canvasContext.lineTo(game.player.cornerPositions.bottomLeft.x, game.player.cornerPositions.bottomLeft.y);
-	game.canvasContext.fill();
+	// game.canvasContext.fillStyle = game.player.color;
+
+	// game.canvasContext.beginPath();
+	// game.canvasContext.moveTo(game.player.cornerPositions.top.x, game.player.cornerPositions.top.y);
+	// game.canvasContext.lineTo(game.player.cornerPositions.bottomRight.x, game.player.cornerPositions.bottomRight.y);
+	// game.canvasContext.lineTo(game.player.cornerPositions.bottomLeft.x, game.player.cornerPositions.bottomLeft.y);
+	// game.canvasContext.fill();
 
 	function setPlayerColorAccordingToChargingStage() {
 		if (game.player.selectedWeapon.radius >= 10 && game.player.selectedWeapon.radius < 20) {
