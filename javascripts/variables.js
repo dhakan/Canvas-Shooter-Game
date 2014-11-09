@@ -77,6 +77,8 @@ var game = (function() {
 
 	var collision = {};
 
+	var render = {};
+
 	return {
 		canvas: canvas,
 		canvasContext: context,
@@ -88,6 +90,7 @@ var game = (function() {
 		bullets: bullets,
 		enemyBlocks: enemyBlocks,
 		collision: collision,
+		render: render,
 		getNewEnemyId: function() {
 			return enemyIdCounter++;
 		}

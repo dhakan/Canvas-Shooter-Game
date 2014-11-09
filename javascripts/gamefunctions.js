@@ -1,6 +1,6 @@
 game.runGameLoop = function() {
-	renderBackground();
-	renderPlayerMovingRestrictionBarrier();
+	game.render.renderBackground();
+	game.render.renderPlayerMovingRestrictionBarrier();
 
 	game.player.move();
 	game.moveBullets();
@@ -9,9 +9,9 @@ game.runGameLoop = function() {
 		game.player.selectedWeapon.radius += 0.30;
 	}
 
-	renderPlayer();
-	renderBullets();
-	renderEnemyBlocks();
+	game.render.renderPlayer();
+	game.render.renderBullets();
+	game.render.renderEnemyBlocks();
 };
 
 game.setUpEnemyBarricade = function() {
@@ -143,4 +143,8 @@ game.getRandomColor = function() {
 		color += letters[Math.floor(Math.random() * 16)];
 	}
 	return color;
+};
+
+game.getCopyOfWeaponAtCurrentWeaponArsenalPosition = function() {
+	return JSON.parse(JSON.stringify(game.player.weaponArsenal[game.player.selectedWeaponIndex]));
 };

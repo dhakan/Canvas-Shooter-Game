@@ -20,8 +20,10 @@ game.collision.playerIsToTheRightOfCanvasLeftBorder = function() {
 game.collision.getCollidingEnemyBlocksIds = function(bullet) {
 	var collidingEnemyBlocksIds = [];
 
-	for (var enemyBlockId in game.enemyBlocks) {
-		var enemyBlock = game.enemyBlocks[enemyBlockId];
+	var enemyBlocksIds = Object.keys(game.enemyBlocks);
+
+	for (var i = 0; i < enemyBlocksIds.length; i++) {
+		var enemyBlock = game.enemyBlocks[enemyBlocksIds[i]];
 
 		if (getBulletIsCollidingWithEnemyBlock(bullet, enemyBlock)) {
 			collidingEnemyBlocksIds.push(enemyBlock.id);

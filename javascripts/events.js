@@ -113,4 +113,4 @@ game.addKeyListeners = function() {
 			}
 		}
 	}
-}
+};

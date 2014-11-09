@@ -12,9 +12,7 @@ game.player.switchWeapon = function(direction) {
 			game.player.selectedWeaponIndex = game.weaponArsenalPositions.FIRST_WEAPON;
 		}
 	}
-	game.player.selectedWeapon = JSON.parse(JSON.stringify(game.player.weaponArsenal[game.player.selectedWeaponIndex]));
-
-	console.log("Switched weapon to: " + game.player.selectedWeapon.type);
+	game.player.selectedWeapon = game.getCopyOfWeaponAtCurrentWeaponArsenalPosition();
 };
 
 game.player.initiateChargeBeam = function() {
@@ -33,7 +31,7 @@ game.player.shootBullet = function() {
 
 	game.bullets.push(game.player.selectedWeapon);
 
-	game.player.selectedWeapon = JSON.parse(JSON.stringify(game.player.weaponArsenal[game.player.selectedWeaponIndex]));
+	game.player.selectedWeapon = game.getCopyOfWeaponAtCurrentWeaponArsenalPosition();
 };
 
 game.player.move = function() {

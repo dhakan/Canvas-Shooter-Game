@@ -1,16 +1,16 @@
-function renderBackground() {
+game.render.renderBackground = function() {
 	game.canvasContext.fillStyle = "black";
 	game.canvasContext.fillRect(0, 0, game.canvas.width, game.canvas.height);
-}
+};
 
-function renderPlayerMovingRestrictionBarrier() {
+game.render.renderPlayerMovingRestrictionBarrier = function() {
 	game.canvasContext.fillStyle = "gray";
 	game.canvasContext.fillRect(game.movingRestrictionBarrier.x, game.movingRestrictionBarrier.y,
 		game.movingRestrictionBarrier.width, game.movingRestrictionBarrier.height);
-}
+};
 
-function renderPlayer() {
-	if (game.isCharging) {
+game.render.renderPlayer = function() {
+	if (game.player.isCharging) {
 		setPlayerColorAccordingToChargingStage();
 	} else {
 		game.player.color = "white";
@@ -33,21 +33,22 @@ function renderPlayer() {
 			game.player.color = "red";
 		}
 	}
-}
+};
 
-function renderBullets() {
+game.render.renderBullets = function() {
 	for (var i = 0; i < game.bullets.length; i++) {
 		game.canvasContext.beginPath();
 		game.canvasContext.fillStyle = game.bullets[i].color;
 		game.canvasContext.arc(game.bullets[i].x, game.bullets[i].y, game.bullets[i].radius, 0, Math.PI * 2, false);
 		game.canvasContext.fill();
 	}
-}
+};
 
-function renderEnemyBlocks() {
-	for (var enemyBlockId in game.enemyBlocks) {
+game.render.renderEnemyBlocks = function() {
+	var enemyBlocksIds = Object.keys(game.enemyBlocks);
 
-		var enemyBlock = game.enemyBlocks[enemyBlockId];
+	for (var i = 0; i < enemyBlocksIds.length; i++) {
+		var enemyBlock = game.enemyBlocks[enemyBlocksIds[i]];
 
 		game.canvasContext.beginPath();
 		game.canvasContext.fillStyle = enemyBlock.color;
@@ -63,4 +64,4 @@ function renderEnemyBlocks() {
 		var HPTextWidth = game.canvasContext.measureText(HPText).width;
 		game.canvasContext.fillText(HPText, enemyBlock.x + (enemyBlock.width / 2) - (HPTextWidth / 2), enemyBlock.y + (enemyBlock.height / 2) + (fontSize / 2));
 	}
-}
+};
