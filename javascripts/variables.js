@@ -20,7 +20,6 @@ var game = (function() {
 	};
 
 	var player = {
-		color: "white",
 		positions: {
 			x: 0,
 			y: 0
@@ -81,7 +80,7 @@ var game = (function() {
 			image: backgroundImage,
 			x: 0,
 			y: 0,
-			movingSpeed: 2
+			movingSpeed: 4
 		};
 
 		var shipImage = new Image();

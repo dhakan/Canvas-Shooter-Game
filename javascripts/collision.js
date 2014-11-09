@@ -2,6 +2,10 @@ game.collision.playerIsAboveCanvasBottomBorder = function() {
 	return game.player.positions.y + game.player.height < game.canvas.height;
 };
 
+game.collision.playerIsBelowCanvasTopBorder = function() {
+	return game.player.positions.y > 0;
+};
+
 /* DO WE NEED THIS? */
 game.collision.playerIsBelowMovingRestrictionBarrier = function() {
 	return game.player.positions.y > game.movingRestrictionBarrier.y + game.movingRestrictionBarrier.height;

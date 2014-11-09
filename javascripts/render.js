@@ -15,31 +15,7 @@ game.render.renderPlayerMovingRestrictionBarrier = function() {
 };
 
 game.render.renderPlayer = function() {
-	// if (game.player.isCharging) {
-	// 	setPlayerColorAccordingToChargingStage();
-	// } else {
-	// 	game.player.color = "white";
-	// }
-
 	game.canvasContext.drawImage(game.images.ship.image, game.player.positions.x, game.player.positions.y, game.player.width, game.player.height);
-
-	// game.canvasContext.fillStyle = game.player.color;
-
-	// game.canvasContext.beginPath();
-	// game.canvasContext.moveTo(game.player.cornerPositions.top.x, game.player.cornerPositions.top.y);
-	// game.canvasContext.lineTo(game.player.cornerPositions.bottomRight.x, game.player.cornerPositions.bottomRight.y);
-	// game.canvasContext.lineTo(game.player.cornerPositions.bottomLeft.x, game.player.cornerPositions.bottomLeft.y);
-	// game.canvasContext.fill();
-
-	function setPlayerColorAccordingToChargingStage() {
-		if (game.player.selectedWeapon.radius >= 10 && game.player.selectedWeapon.radius < 20) {
-			game.player.color = "yellow";
-		} else if (game.player.selectedWeapon.radius >= 20 && game.player.selectedWeapon.radius < 30) {
-			game.player.color = "orange";
-		} else if (game.player.selectedWeapon.radius >= 30) {
-			game.player.color = "red";
-		}
-	}
 };
 
 game.render.renderBullets = function() {

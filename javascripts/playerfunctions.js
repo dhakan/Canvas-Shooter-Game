@@ -35,7 +35,8 @@ game.player.shootBullet = function() {
 };
 
 game.player.move = function() {
-	if (game.player.movingDirectionY === game.directions.up)  {
+	if (game.player.movingDirectionY === game.directions.up &&
+		game.collision.playerIsBelowCanvasTopBorder())  {
 		game.player.positions.y -= game.player.movingSpeed;
 
 	} else if (game.player.movingDirectionY === game.directions.down &&
