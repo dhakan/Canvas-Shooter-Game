@@ -1,6 +1,11 @@
 game.render.renderBackground = function() {
-	game.canvasContext.fillStyle = "black";
-	game.canvasContext.fillRect(0, 0, game.canvas.width, game.canvas.height);
+	game.canvasContext.drawImage(game.images.background.image, game.images.background.x, game.images.background.y);
+	game.canvasContext.drawImage(game.images.background.image, game.images.background.x, game.images.background.y - game.canvas.height);
+
+	if (game.images.background.y >= game.canvas.height) {
+		game.images.background.y = 0;
+	}
+	game.images.background.y++;
 };
 
 game.render.renderPlayerMovingRestrictionBarrier = function() {

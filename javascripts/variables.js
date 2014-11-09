@@ -79,6 +79,21 @@ var game = (function() {
 
 	var render = {};
 
+	var images = (function() {
+		var image = new Image();
+		image.src = "sprites/background.jpg";
+
+		var background = {
+			image: image,
+			x: 0,
+			y: 0
+		};
+
+		return {
+			background: background
+		};
+	}());
+
 	return {
 		canvas: canvas,
 		canvasContext: context,
@@ -91,6 +106,7 @@ var game = (function() {
 		enemyBlocks: enemyBlocks,
 		collision: collision,
 		render: render,
+		images: images,
 		getNewEnemyId: function() {
 			return enemyIdCounter++;
 		}
