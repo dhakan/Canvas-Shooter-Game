@@ -1,31 +1,27 @@
-function playerIsAboveCanvasBottomBorder(player, canvas) {
-	return player.cornerPositions.bottomRight.y < canvas.height;
-}
+game.collision.playerIsAboveCanvasBottomBorder = function() {
+	return game.player.cornerPositions.bottomRight.y < game.canvas.height;
+};
 
-function playerIsBelowCanvasTopBorder(player, canvas) {
-	return player.cornerPositions.top.y > 0;
-}
+game.collision.playerIsBelowMovingRestrictionBarrier = function() {
+	return game.player.cornerPositions.top.y > game.movingRestrictionBarrier.y + game.movingRestrictionBarrier.height;
+};
 
-function playerIsBelowMovingRestrictionBarrier(player, movingRestrictionBarrier) {
-	return player.cornerPositions.top.y > movingRestrictionBarrier.y + movingRestrictionBarrier.height;
-}
+game.collision.playerIsToTheLeftOfCanvasRightBorder = function() {
+	return game.player.cornerPositions.bottomRight.x < game.canvas.width;
+};
 
-function playerIsToTheLeftOfCanvasRightBorder(player, canvas) {
-	return player.cornerPositions.bottomRight.x < canvas.width;
-}
-
-function playerIsToTheRightOfCanvasLeftBorder(player, canvas) {
-	return player.cornerPositions.bottomLeft.x > 0;
-}
+game.collision.playerIsToTheRightOfCanvasLeftBorder = function() {
+	return game.player.cornerPositions.bottomLeft.x > 0;
+};
 
 /*
 	TODO: Implement better collision detection.
 */
-function getCollidingEnemyBlocksIds(bullet, enemyBlocks) {
+game.collision.getCollidingEnemyBlocksIds = function(bullet) {
 	var collidingEnemyBlocksIds = [];
 
-	for (var enemyBlockId in enemyBlocks) {
-		var enemyBlock = enemyBlocks[enemyBlockId];
+	for (var enemyBlockId in game.enemyBlocks) {
+		var enemyBlock = game.enemyBlocks[enemyBlockId];
 
 		if (getBulletIsCollidingWithEnemyBlock(bullet, enemyBlock)) {
 			collidingEnemyBlocksIds.push(enemyBlock.id);
@@ -39,4 +35,4 @@ function getCollidingEnemyBlocksIds(bullet, enemyBlocks) {
 			(bullet.x + bullet.radius) >= block.x &&
 			(bullet.x - bullet.radius) <= block.x + block.width;
 	}
-}
+};

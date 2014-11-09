@@ -1,4 +1,4 @@
-function addKeyListeners(keyCodes, player, directions) {
+game.addKeyListeners = function() {
 	var verticalArrowKeyDirectionsHeldDown = [],
 		horizontalArrowKeyDirectionsHeldDown = [];
 
@@ -12,29 +12,29 @@ function addKeyListeners(keyCodes, player, directions) {
 
 	function arrowKeyDownListener(event) {
 		switch (event.which) {
-			case keyCodes.up:
-				if (verticalArrowKeyDirectionsHeldDown.indexOf(directions.up) === -1) {
-					verticalArrowKeyDirectionsHeldDown.push(directions.up);
-					player.movingDirectionY = directions.up;
+			case game.keyCodes.up:
+				if (verticalArrowKeyDirectionsHeldDown.indexOf(game.directions.up) === -1) {
+					verticalArrowKeyDirectionsHeldDown.push(game.directions.up);
+					game.player.movingDirectionY = game.directions.up;
 				}
 				break;
-			case keyCodes.down:
-				if (verticalArrowKeyDirectionsHeldDown.indexOf(directions.down) === -1) {
-					verticalArrowKeyDirectionsHeldDown.push(directions.down);
-					player.movingDirectionY = directions.down;
+			case game.keyCodes.down:
+				if (verticalArrowKeyDirectionsHeldDown.indexOf(game.directions.down) === -1) {
+					verticalArrowKeyDirectionsHeldDown.push(game.directions.down);
+					game.player.movingDirectionY = game.directions.down;
 				}
 				break;
-			case keyCodes.left:
-				if (horizontalArrowKeyDirectionsHeldDown.indexOf(directions.left) === -1) {
-					horizontalArrowKeyDirectionsHeldDown.push(directions.left);
-					player.movingDirectionX = directions.left;
+			case game.keyCodes.left:
+				if (horizontalArrowKeyDirectionsHeldDown.indexOf(game.directions.left) === -1) {
+					horizontalArrowKeyDirectionsHeldDown.push(game.directions.left);
+					game.player.movingDirectionX = game.directions.left;
 				}
 
 				break;
-			case keyCodes.right:
-				if (horizontalArrowKeyDirectionsHeldDown.indexOf(directions.right) === -1) {
-					horizontalArrowKeyDirectionsHeldDown.push(directions.right);
-					player.movingDirectionX = directions.right;
+			case game.keyCodes.right:
+				if (horizontalArrowKeyDirectionsHeldDown.indexOf(game.directions.right) === -1) {
+					horizontalArrowKeyDirectionsHeldDown.push(game.directions.right);
+					game.player.movingDirectionX = game.directions.right;
 				}
 				break;
 		}
@@ -42,39 +42,39 @@ function addKeyListeners(keyCodes, player, directions) {
 
 	function arrowKeyUpListener(event) {
 		if (getKeyReleasedIsAVerticalArrowKey(event.which)) {
-			if (event.which === keyCodes.up) {
-				removeHeldDownVerticalKey(directions.up);
-			} else if (event.which === keyCodes.down) {
-				removeHeldDownVerticalKey(directions.down);
+			if (event.which === game.keyCodes.up) {
+				removeHeldDownVerticalKey(game.directions.up);
+			} else if (event.which === game.keyCodes.down) {
+				removeHeldDownVerticalKey(game.directions.down);
 			}
 
 			if (verticalArrowKeyDirectionsHeldDown.length === 0) {
-				player.movingDirectionY = undefined;
+				game.player.movingDirectionY = undefined;
 			} else {
-				player.movingDirectionY = verticalArrowKeyDirectionsHeldDown[0];
+				game.player.movingDirectionY = verticalArrowKeyDirectionsHeldDown[0];
 			}
 		} else if (getKeyReleasedIsAHorizontalArrowKey(event.which)) {
-			if (event.which === keyCodes.left) {
-				removeHeldDownHorizontalKey(directions.left);
-			} else if (event.which === keyCodes.right) {
-				removeHeldDownHorizontalKey(directions.right);
+			if (event.which === game.keyCodes.left) {
+				removeHeldDownHorizontalKey(game.directions.left);
+			} else if (event.which === game.keyCodes.right) {
+				removeHeldDownHorizontalKey(game.directions.right);
 			}
 
 			if (horizontalArrowKeyDirectionsHeldDown.length === 0) {
-				player.movingDirectionX = undefined;
+				game.player.movingDirectionX = undefined;
 			} else {
-				player.movingDirectionX = horizontalArrowKeyDirectionsHeldDown[0];
+				game.player.movingDirectionX = horizontalArrowKeyDirectionsHeldDown[0];
 			}
 		}
 
 		function getKeyReleasedIsAVerticalArrowKey(keyCode) {
-			return keyCode === keyCodes.up ||
-				keyCode === keyCodes.down;
+			return keyCode === game.keyCodes.up ||
+				keyCode === game.keyCodes.down;
 		}
 
 		function getKeyReleasedIsAHorizontalArrowKey(keyCode) {
-			return keyCode === keyCodes.left ||
-				keyCode === keyCodes.right;
+			return keyCode === game.keyCodes.left ||
+				keyCode === game.keyCodes.right;
 		}
 
 		function removeHeldDownVerticalKey(verticalDirection) {
@@ -87,28 +87,28 @@ function addKeyListeners(keyCodes, player, directions) {
 	}
 
 	function chargeShotInitializerListener(event) {
-		if (event.which === keyCodes.space &&
-			player.selectedWeapon.isChargable) {
-			player.initiateChargeBeam();
+		if (event.which === game.keyCodes.space &&
+			game.player.selectedWeapon.isChargable) {
+			game.player.initiateChargeBeam();
 		}
 	}
 
 	function chargeShotReleaseListener(event) {
 		switch (event.which) {
-			case keyCodes.space:
-				player.shootBullet();
+			case game.keyCodes.space:
+				game.player.shootBullet();
 				break;
 		}
 	}
 
 	function weaponSwitchListener(event) {
-		if (player.isCharging === false) {
+		if (game.player.isCharging === false) {
 			switch (event.which) {
-				case keyCodes.q:
-					player.switchWeapon("backwards");
+				case game.keyCodes.q:
+					game.player.switchWeapon("backwards");
 					break;
-				case keyCodes.e:
-					player.switchWeapon("forward");
+				case game.keyCodes.e:
+					game.player.switchWeapon("forward");
 					break;
 			}
 		}
