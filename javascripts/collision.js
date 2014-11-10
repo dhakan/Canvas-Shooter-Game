@@ -2,22 +2,18 @@ game.collision.playerIsAboveCanvasBottomBorder = function() {
 	return game.player.positions.y + game.player.height < game.canvas.height;
 };
 
-/* DO WE NEED THIS? */
-game.collision.playerIsBelowMovingRestrictionBarrier = function() {
-	return game.player.positions.y > game.movingRestrictionBarrier.y + game.movingRestrictionBarrier.height;
+game.collision.playerIsBelowCanvasTopBorder = function() {
+	return game.player.positions.y > 0;
 };
 
 game.collision.playerIsToTheLeftOfCanvasRightBorder = function() {
-	return game.player.positions.x + game.player.width - 5 < game.canvas.width;
+	return game.player.positions.x + game.player.width < game.canvas.width;
 };
 
 game.collision.playerIsToTheRightOfCanvasLeftBorder = function() {
-	return game.player.positions.x + 5 > 0;
+	return game.player.positions.x > 0;
 };
 
-/*
-	TODO: Implement better collision detection.
-*/
 game.collision.getCollidingEnemyBlocksIds = function(bullet) {
 	var collidingEnemyBlocksIds = [];
 
@@ -34,8 +30,37 @@ game.collision.getCollidingEnemyBlocksIds = function(bullet) {
 	return collidingEnemyBlocksIds;
 
 	function getBulletIsCollidingWithEnemyBlock(bullet, block) {
-		return (bullet.y - bullet.radius) <= block.y + block.height &&
-			(bullet.x + bullet.radius) >= block.x &&
-			(bullet.x - bullet.radius) <= block.x + block.width;
+		return getCircleIsCollidingWithRectangle(bullet, block);
+
+	}
+
+	function getCircleIsCollidingWithRectangle(circle, rectangle) {
+  		var rectangleMiddleX = rectangle.x + rectangle.width / 2,
+  			rectangleMiddleY = rectangle.y + rectangle.height / 2;
+
+  		var distanceFromMiddleOfCircleToMiddleOfRectangle = {
+  			x: Math.abs(circle.x - rectangleMiddleX),
+  			y: Math.abs(circle.y - rectangleMiddleY)
+  		};
+
+  		if (distanceFromMiddleOfCircleToMiddleOfRectangle.x > (rectangle.width / 2 + circle.radius)) {
+  			return false;
+  		}
+
+  		if (distanceFromMiddleOfCircleToMiddleOfRectangle.y > (rectangle.height / 2 + circle.radius)) {
+  			return false;
+  		}
+
+  		if (distanceFromMiddleOfCircleToMiddleOfRectangle.x <= (rectangle.width / 2)) {
+  			return true;
+  		}
+
+  		if (distanceFromMiddleOfCircleToMiddleOfRectangle.y <= (rectangle.height / 2)) {
+  			return true;
+  		}
+
+  		var cornerDistanceSquared = Math.pow(distanceFromMiddleOfCircleToMiddleOfRectangle.x - rectangle.width / 2, 2) + Math.pow(distanceFromMiddleOfCircleToMiddleOfRectangle.y - rectangle.height / 2, 2);
+
+  		return Math.sqrt(cornerDistanceSquared) <= circle.radius;
 	}
 };
