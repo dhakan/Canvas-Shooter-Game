@@ -20,10 +20,13 @@ game.render.renderPlayer = function() {
 
 game.render.renderBullets = function() {
 	for (var i = 0; i < game.bullets.length; i++) {
-		game.canvasContext.beginPath();
-		game.canvasContext.fillStyle = game.bullets[i].color;
-		game.canvasContext.arc(game.bullets[i].x, game.bullets[i].y, game.bullets[i].radius, 0, Math.PI * 2, false);
-		game.canvasContext.fill();
+		var bullet = game.bullets[i];
+
+		if (bullet.type === "circle") {
+			game.canvasContext.drawImage(bullet.image, bullet.x, bullet.y, bullet.radius * 2, bullet.radius * 2);
+		} else if (bullet.type === "rectangle") {
+			game.canvasContext.drawImage(bullet.image, bullet.x - bullet.width / 2, bullet.y - bullet.radius, bullet.radius * 2, bullet.radius * 2);
+		}
 	}
 };
 
@@ -32,19 +35,6 @@ game.render.renderEnemyBlocks = function() {
 
 	for (var i = 0; i < enemyBlocksIds.length; i++) {
 		var enemyBlock = game.enemyBlocks[enemyBlocksIds[i]];
-
-		game.canvasContext.beginPath();
-		game.canvasContext.fillStyle = enemyBlock.color;
-		game.canvasContext.lineWidth = 2;
-		game.canvasContext.strokeStyle = "white";
-		game.canvasContext.fillRect(enemyBlock.x, enemyBlock.y, enemyBlock.width, enemyBlock.height);
-		game.canvasContext.strokeRect(enemyBlock.x, enemyBlock.y, enemyBlock.width, enemyBlock.height);
-
-		game.canvasContext.fillStyle = "black";
-		var fontSize = 10;
-		game.canvasContext.font = fontSize + "px Helvetica";
-		var HPText = Math.ceil(enemyBlock.hp);
-		var HPTextWidth = game.canvasContext.measureText(HPText).width;
-		game.canvasContext.fillText(HPText, enemyBlock.x + (enemyBlock.width / 2) - (HPTextWidth / 2), enemyBlock.y + (enemyBlock.height / 2) + (fontSize / 2));
+		game.canvasContext.drawImage(enemyBlock.image, enemyBlock.x, enemyBlock.y, enemyBlock.width, enemyBlock.height);
 	}
 };

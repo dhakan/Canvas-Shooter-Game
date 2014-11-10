@@ -22,16 +22,23 @@ game.player.initiateChargeBeam = function() {
 game.player.shootBullet = function() {
 	if (game.player.isCharging) {
 		game.player.isCharging = false;
-		game.player.selectedWeapon.damage = game.player.selectedWeapon.radius / 2;
 	}
 
-	game.player.selectedWeapon.x = game.player.positions.x + game.player.width / 2;
-	game.player.selectedWeapon.y = game.player.positions.y - game.player.selectedWeapon.radius;
-	game.player.selectedWeapon.color = game.player.color;
+	setSelectedWeaponXAndYPositions();
 
 	game.bullets.push(game.player.selectedWeapon);
 
 	game.player.selectedWeapon = game.getCopyOfWeaponAtCurrentWeaponArsenalPosition();
+
+	function setSelectedWeaponXAndYPositions() {
+		if (game.player.selectedWeapon.type === "circle") {
+			game.player.selectedWeapon.x = game.player.positions.x + game.player.width / 2;
+			game.player.selectedWeapon.y = game.player.positions.y - game.player.selectedWeapon.radius;
+		} else if (game.player.selectedWeapon.type === "rectangle") {
+			game.player.selectedWeapon.x = game.player.positions.x + game.player.width / 2;
+			game.player.selectedWeapon.y = game.player.positions.y - game.player.selectedWeapon.height;
+		}
+	}
 };
 
 game.player.move = function() {

@@ -1,6 +1,5 @@
 game.runGameLoop = function() {
 	game.render.renderBackground();
-	// game.render.renderPlayerMovingRestrictionBarrier();
 
 	game.player.move();
 	game.moveBullets();
@@ -17,7 +16,7 @@ game.runGameLoop = function() {
 game.setUpEnemyBarricade = function() {
 	var currentRowEnemyBlockYPosition = 50;
 
-	for (var row = 0; row < 3; row++) {
+	for (var row = 0; row < 5; row++) {
 		var currentRowEnemyBlockXPosition = 50,
 			newBlockFitsOnRow = true,
 			currentRowEnemyHP = Math.ceil(Math.random() * 20) + 15;
@@ -30,7 +29,8 @@ game.setUpEnemyBarricade = function() {
 				width: currentRowEnemyHP,
 				height: currentRowEnemyHP,
 				x: currentRowEnemyBlockXPosition,
-				y: currentRowEnemyBlockYPosition
+				y: currentRowEnemyBlockYPosition,
+				image: game.images.normalEnemy.image
 			};
 
 			if (getBlockFitsOnCurrentRow(enemyBlock.width)) {
@@ -59,7 +59,8 @@ game.addEnemyBlock = function() {
 		width: enemyHP,
 		height: enemyHP,
 		x: lastEnemyBlock.x,
-		y: lastEnemyBlock.y + lastEnemyBlock.height
+		y: lastEnemyBlock.y + lastEnemyBlock.height,
+		image: game.images.normalEnemy.image
 	};
 	game.enemyBlocks[enemyBlock.id] = enemyBlock;
 
@@ -146,5 +147,15 @@ game.getRandomColor = function() {
 };
 
 game.getCopyOfWeaponAtCurrentWeaponArsenalPosition = function() {
-	return JSON.parse(JSON.stringify(game.player.weaponArsenal[game.player.selectedWeaponIndex]));
-};
+	var weaponAtCurrentWeaponPosition = game.player.weaponArsenal[game.player.selectedWeaponIndex];
+
+	var copyOfCurrentWeapon = {
+		type: weaponAtCurrentWeaponPosition.type,
+		radius: weaponAtCurrentWeaponPosition.radius,
+		damage: weaponAtCurrentWeaponPosition.damage,
+		movingSpeed: weaponAtCurrentWeaponPosition.movingSpeed,
+		image: weaponAtCurrentWeaponPosition.image
+	}
+
+	return copyOfCurrentWeapon;
+}
