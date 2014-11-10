@@ -19,11 +19,14 @@ var game = (function() {
 		e: 69
 	};
 
-	var bullets = [];
+	var bullets = [],
+		bulletType = {
+			circle: "circle",
+			rectangle: "rectangle"
+		};
 
-	var enemyBlocks = {};
-
-	var enemyIdCounter = 0;
+	var enemyBlocks = {},
+		enemyIdCounter = 0;
 
 	var collision = {};
 
@@ -35,6 +38,7 @@ var game = (function() {
 		directions: directions,
 		keyCodes: keyCodes,
 		bullets: bullets,
+		bulletType: bulletType,
 		enemyBlocks: enemyBlocks,
 		collision: collision,
 		render: render,

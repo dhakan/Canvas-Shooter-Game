@@ -8,24 +8,18 @@ game.render.renderBackground = function() {
 	game.images.background.y += game.images.background.movingSpeed;
 };
 
-game.render.renderPlayerMovingRestrictionBarrier = function() {
-	game.canvasContext.fillStyle = "gray";
-	game.canvasContext.fillRect(game.movingRestrictionBarrier.x, game.movingRestrictionBarrier.y,
-		game.movingRestrictionBarrier.width, game.movingRestrictionBarrier.height);
-};
-
 game.render.renderPlayer = function() {
-	game.canvasContext.drawImage(game.images.ship.image, game.player.positions.x, game.player.positions.y, game.player.width, game.player.height);
+	game.canvasContext.drawImage(game.images.ship.image, game.player.position.x, game.player.position.y, game.player.width, game.player.height);
 };
 
 game.render.renderBullets = function() {
 	for (var i = 0; i < game.bullets.length; i++) {
 		var bullet = game.bullets[i];
 
-		if (bullet.type === "circle") {
-			game.canvasContext.drawImage(bullet.image, bullet.x, bullet.y, bullet.radius * 2, bullet.radius * 2);
-		} else if (bullet.type === "rectangle") {
-			game.canvasContext.drawImage(bullet.image, bullet.x - bullet.width / 2, bullet.y - bullet.radius, bullet.radius * 2, bullet.radius * 2);
+		if (bullet.type === game.bulletType.circle) {
+			game.canvasContext.drawImage(bullet.image, bullet.x - bullet.radius, bullet.y - bullet.radius, bullet.radius * 2, bullet.radius * 2);
+		} else if (bullet.type === game.bulletType.rectangle) {
+			game.canvasContext.drawImage(bullet.image, bullet.x, bullet.y, bullet.width, bullet.height);
 		}
 	}
 };

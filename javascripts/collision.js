@@ -1,17 +1,17 @@
 game.collision.playerIsAboveCanvasBottomBorder = function() {
-	return game.player.positions.y + game.player.height < game.canvas.height;
+	return game.player.position.y + game.player.height < game.canvas.height;
 };
 
 game.collision.playerIsBelowCanvasTopBorder = function() {
-	return game.player.positions.y > 0;
+	return game.player.position.y > 0;
 };
 
 game.collision.playerIsToTheLeftOfCanvasRightBorder = function() {
-	return game.player.positions.x + game.player.width < game.canvas.width;
+	return game.player.position.x + game.player.width < game.canvas.width;
 };
 
 game.collision.playerIsToTheRightOfCanvasLeftBorder = function() {
-	return game.player.positions.x > 0;
+	return game.player.position.x > 0;
 };
 
 game.collision.getCollidingEnemyBlocksIds = function(bullet) {
@@ -30,8 +30,11 @@ game.collision.getCollidingEnemyBlocksIds = function(bullet) {
 	return collidingEnemyBlocksIds;
 
 	function getBulletIsCollidingWithEnemyBlock(bullet, block) {
-		return getCircleIsCollidingWithRectangle(bullet, block);
-
+		if (bullet.type === game.bulletType.circle) {
+			return getCircleIsCollidingWithRectangle(bullet, block);
+		} else if (bullet.type === game.bulletType.rectangle) {
+			return getRectangleIsCollidingWithRectangle(bullet, block);
+		}
 	}
 
 	function getCircleIsCollidingWithRectangle(circle, rectangle) {
@@ -62,5 +65,12 @@ game.collision.getCollidingEnemyBlocksIds = function(bullet) {
 		var cornerDistanceSquared = Math.pow(distanceFromMiddleOfCircleToMiddleOfRectangle.x - rectangle.width / 2, 2) + Math.pow(distanceFromMiddleOfCircleToMiddleOfRectangle.y - rectangle.height / 2, 2);
 
 		return Math.sqrt(cornerDistanceSquared) <= circle.radius;
+	}
+
+	function getRectangleIsCollidingWithRectangle(rectangle1, rectangle2) {
+		return rectangle1.x < rectangle2.x + rectangle2.width &&
+			rectangle1.x + rectangle1.width > rectangle2.x &&
+			rectangle1.y < rectangle2.y + rectangle2.height &&
+			rectangle1.height + rectangle1.y > rectangle2.y;
 	}
 };

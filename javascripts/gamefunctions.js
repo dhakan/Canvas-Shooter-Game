@@ -5,7 +5,8 @@ game.runGameLoop = function() {
 	game.moveBullets();
 
 	if (game.player.isCharging) {
-		game.player.selectedWeapon.radius += 0.30;
+		game.player.selectedWeapon.width += 0.50;
+		game.player.selectedWeapon.height += 1;
 	}
 
 	game.render.renderPlayer();
@@ -92,7 +93,7 @@ game.moveBullets = function() {
 		var collidingEnemyBlocksIds = game.collision.getCollidingEnemyBlocksIds(game.bullets[bulletIndex]);
 
 		if (collidingEnemyBlocksIds.length > 0) {
-			updateObjectsInCollision(bulletIndex, collidingEnemyBlocksIds);
+			updateHPOfObjectsInCollision(bulletIndex, collidingEnemyBlocksIds);
 		} else if (getBulletIsOutsideOfCanvasBorder(game.bullets[bulletIndex])) {
 			killBullet(bulletIndex);
 		} else {
@@ -100,7 +101,7 @@ game.moveBullets = function() {
 		}
 	}
 
-	function updateObjectsInCollision(bulletIndex, collidingEnemyBlocksIds) {
+	function updateHPOfObjectsInCollision(bulletIndex, collidingEnemyBlocksIds) {
 		var bullet = game.bullets[bulletIndex],
 			accumulatedDamageDoneToBulletInAllBlockCollisions = 0;
 
@@ -150,12 +151,18 @@ game.getCopyOfWeaponAtCurrentWeaponArsenalPosition = function() {
 	var weaponAtCurrentWeaponPosition = game.player.weaponArsenal[game.player.selectedWeaponIndex];
 
 	var copyOfCurrentWeapon = {
+		name: weaponAtCurrentWeaponPosition.name,
 		type: weaponAtCurrentWeaponPosition.type,
 		radius: weaponAtCurrentWeaponPosition.radius,
+		x: weaponAtCurrentWeaponPosition.x,
+		y: weaponAtCurrentWeaponPosition.y,
+		width: weaponAtCurrentWeaponPosition.width,
+		height: weaponAtCurrentWeaponPosition.height,
 		damage: weaponAtCurrentWeaponPosition.damage,
 		movingSpeed: weaponAtCurrentWeaponPosition.movingSpeed,
+		isChargable: weaponAtCurrentWeaponPosition.isChargable,
 		image: weaponAtCurrentWeaponPosition.image
-	}
+	};
 
 	return copyOfCurrentWeapon;
-}
+};
