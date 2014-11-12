@@ -147,8 +147,8 @@ game.getRandomColor = function() {
 	return color;
 };
 
-game.getCopyOfWeaponAtCurrentWeaponArsenalPosition = function() {
-	var weaponAtCurrentWeaponPosition = game.player.weaponArsenal[game.player.selectedWeaponIndex];
+game.getCopyOfWeaponAtCurrentWeaponPosition = function() {
+	var weaponAtCurrentWeaponPosition = game.player.weapons[game.player.selectedWeaponIndex];
 
 	var copyOfCurrentWeapon = {
 		name: weaponAtCurrentWeaponPosition.name,

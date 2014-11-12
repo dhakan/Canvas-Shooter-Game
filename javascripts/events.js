@@ -100,16 +100,20 @@ game.addKeyListeners = function() {
 				break;
 		}
 	}
-
+ 
 	function weaponSwitchListener(event) {
-		if (game.player.isCharging === false) {
-			switch (event.which) {
-				case game.keyCodes.q:
+		if (game.player.weapons.length > 1) {
+			if (event.which === game.keyCodes.q || 
+				event.which === game.keyCodes.e) {
+				if (game.player.isCharging) {
+					game.player.isCharging = false;
+				}
+
+				if (event.which === game.keyCodes.q) {
 					game.player.switchWeapon("backwards");
-					break;
-				case game.keyCodes.e:
+				} else if (event.which === game.keyCodes.e) {
 					game.player.switchWeapon("forward");
-					break;
+				}
 			}
 		}
 	}

@@ -5,19 +5,19 @@ game.player.setStartPosition = function(x, y) {
 
 game.player.switchWeapon = function(direction) {
 	if (direction === "backwards") {
-		if (game.player.selectedWeaponIndex > game.weaponArsenalPositions.FIRST_WEAPON) {
+		if (game.player.selectedWeaponIndex > game.weaponPosition.FIRST_WEAPON) {
 			game.player.selectedWeaponIndex--;
 		} else {
-			game.player.selectedWeaponIndex = game.weaponArsenalPositions.LAST_WEAPON;
+			game.player.selectedWeaponIndex = game.weaponPosition.LAST_WEAPON;
 		}
 	} else if (direction === "forward") {
-		if (game.player.selectedWeaponIndex < game.weaponArsenalPositions.LAST_WEAPON) {
+		if (game.player.selectedWeaponIndex < game.weaponPosition.LAST_WEAPON) {
 			game.player.selectedWeaponIndex++;
 		} else {
-			game.player.selectedWeaponIndex = game.weaponArsenalPositions.FIRST_WEAPON;
+			game.player.selectedWeaponIndex = game.weaponPosition.FIRST_WEAPON;
 		}
 	}
-	game.player.selectedWeapon = game.getCopyOfWeaponAtCurrentWeaponArsenalPosition();
+	game.player.selectedWeapon = game.getCopyOfWeaponAtCurrentWeaponPosition();
 };
 
 game.player.initiateChargeBeam = function() {
@@ -33,7 +33,7 @@ game.player.shootBullet = function() {
 
 	game.bullets.push(game.player.selectedWeapon);
 
-	game.player.selectedWeapon = game.getCopyOfWeaponAtCurrentWeaponArsenalPosition();
+	game.player.selectedWeapon = game.getCopyOfWeaponAtCurrentWeaponPosition();
 
 	function setSelectedWeaponXAndYPositionsAlignedWithPlayer() {
 		if (game.player.selectedWeapon.type === game.bulletType.circle) {
