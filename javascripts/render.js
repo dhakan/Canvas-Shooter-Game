@@ -1,3 +1,7 @@
+game.render.startRendering = function() {
+	renderEverything();
+};
+
 game.render.renderBackground = function() {
 	game.canvasContext.drawImage(game.images.background.image, game.images.background.x, game.images.background.y, game.canvas.width, game.canvas.height);
 	game.canvasContext.drawImage(game.images.background.image, game.images.background.x, game.images.background.y - game.canvas.height, game.canvas.width, game.canvas.height);
@@ -9,7 +13,11 @@ game.render.renderBackground = function() {
 };
 
 game.render.renderPlayer = function() {
-	game.canvasContext.drawImage(game.images.ship.image, game.player.position.x, game.player.position.y, game.player.width, game.player.height);
+	var sourceImageFrameXPosition = game.player.currentImageFrameIndex * 92;
+
+	game.canvasContext.drawImage(game.player.image, 
+		sourceImageFrameXPosition, 0, 92, 108, 
+		game.player.position.x, game.player.position.y, game.player.width, game.player.height);
 };
 
 game.render.renderBullets = function() {
@@ -32,3 +40,33 @@ game.render.renderEnemyBlocks = function() {
 		game.canvasContext.drawImage(enemyBlock.image, enemyBlock.x, enemyBlock.y, enemyBlock.width, enemyBlock.height);
 	}
 };
+
+game.render.changePlayerImageFrameAccordingToMovingDirection = function(direction) {
+	if (direction === game.directions.left) {
+		game.player.currentImageFrameIndex = 0;
+	} else if (direction === game.directions.right) {
+		game.player.currentImageFrameIndex = 2;
+	} else {
+		game.player.currentImageFrameIndex = 1;
+	}
+};
+
+/* HAS TO BE GLOBAL IN ORDER FOR ANIMATION
+	OPTIMIZATION TO WORK */
+function renderEverything() {
+	requestAnimFrame(renderEverything);
+	game.render.renderBackground();
+	game.render.renderPlayer();
+	game.render.renderBullets();
+	game.render.renderEnemyBlocks();
+};
+
+/* PAUL IRISH ANIMATION OPTIMIZATION */
+window.requestAnimFrame = (function(){
+  return  window.requestAnimationFrame       ||
+          window.webkitRequestAnimationFrame ||
+          window.mozRequestAnimationFrame    ||
+          function( callback ){
+            window.setTimeout(callback, 1000 / 60);
+          };
+})();

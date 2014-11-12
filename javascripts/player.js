@@ -8,9 +8,11 @@ game.player = {
 	movingDirectionX: undefined,
 	movingDirectionY: undefined,
 	movingSpeed: 5,
-	weapons: [game.weapons.normal, game.weapons.bomb],
+	weapons: [game.weapons.normal, game.weapons.bomb, game.weapons.other],
 	selectedWeaponIndex: 0,
 	isCharging: false,
+	image: game.images.ship.image,
+	currentImageFrameIndex: 1
 };
 
 game.weaponPosition = {

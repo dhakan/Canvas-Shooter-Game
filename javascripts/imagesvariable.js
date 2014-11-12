@@ -9,9 +9,10 @@ game.images = (function() {
 	};
 
 	var shipImage = new Image();
-	shipImage.src = "sprites/ship.png";
+	shipImage.src = "sprites/ship_framess.png";
 	var ship = {
-		image: shipImage
+		image: shipImage,
+		numberOfFrames: 3
 	};
 
 	var normalBulletImage = new Image();
@@ -26,6 +27,12 @@ game.images = (function() {
 		image: bombBulletImage
 	};
 
+	var otherBulletImage = new Image();
+	otherBulletImage.src = "sprites/bullet_other.gif"
+	var otherBullet = {
+		image: otherBulletImage
+	};
+
 	var normalEnemyImage = new Image();
 	normalEnemyImage.src = "sprites/enemy1.png";
 	var normalEnemy = {
@@ -37,6 +44,7 @@ game.images = (function() {
 		ship: ship,
 		normalBullet: normalBullet,
 		bombBullet: bombBullet,
+		otherBullet: otherBullet,
 		normalEnemy: normalEnemy
 	};
 }());

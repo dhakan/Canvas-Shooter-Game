@@ -1,6 +1,4 @@
-game.runGameLoop = function() {
-	game.render.renderBackground();
-
+game.runGameLogicLoop = function() {
 	game.player.move();
 	game.moveBullets();
 
@@ -8,10 +6,6 @@ game.runGameLoop = function() {
 		game.player.selectedWeapon.width += 0.50;
 		game.player.selectedWeapon.height += 1;
 	}
-
-	game.render.renderPlayer();
-	game.render.renderBullets();
-	game.render.renderEnemyBlocks();
 };
 
 game.setUpEnemyBarricade = function() {

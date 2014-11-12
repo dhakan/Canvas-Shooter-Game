@@ -55,11 +55,15 @@ game.player.move = function() {
 		game.player.position.y += game.player.movingSpeed;
 	}
 
-	if (game.player.movingDirectionX === game.directions.left &&
+	if (game.player.movingDirectionX === undefined) {
+		game.render.changePlayerImageFrameAccordingToMovingDirection(game.player.movingDirectionX);
+	} else if (game.player.movingDirectionX === game.directions.left &&
 		game.collision.playerIsToTheRightOfCanvasLeftBorder()) {
 		game.player.position.x -= game.player.movingSpeed;
+		game.render.changePlayerImageFrameAccordingToMovingDirection(game.player.movingDirectionX);
 	} else if (game.player.movingDirectionX === game.directions.right &&
 		game.collision.playerIsToTheLeftOfCanvasRightBorder()) {
 		game.player.position.x += game.player.movingSpeed;
+		game.render.changePlayerImageFrameAccordingToMovingDirection(game.player.movingDirectionX);
 	}
 };

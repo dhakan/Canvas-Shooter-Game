@@ -1,4 +1,4 @@
-var game = (function() {
+var game = (function () {
 	var canvas = document.querySelector("canvas"),
 		context = canvas.getContext("2d");
 
