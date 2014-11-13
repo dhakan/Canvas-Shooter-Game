@@ -11,7 +11,7 @@ game.player = {
 	weapons: [game.weapons.normal, game.weapons.bomb, game.weapons.other],
 	selectedWeaponIndex: 0,
 	isCharging: false,
-	image: game.images.ship.image,
+	image: game.images.ship,
 	currentImageFrameIndex: 1
 };
 

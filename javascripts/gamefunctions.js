@@ -20,7 +20,6 @@ game.setUpEnemyBarricade = function() {
 			var enemyBlock = {
 				id: game.getNewEnemyId(),
 				hp: currentRowEnemyHP,
-				color: game.getRandomColor(),
 				width: currentRowEnemyHP,
 				height: currentRowEnemyHP,
 				x: currentRowEnemyBlockXPosition,
@@ -50,7 +49,6 @@ game.addEnemyBlock = function() {
 	var enemyBlock = {
 		id: game.getNewEnemyId(),
 		hp: enemyHP,
-		color: game.getRandomColor(),
 		width: enemyHP,
 		height: enemyHP,
 		x: lastEnemyBlock.x,
@@ -130,15 +128,6 @@ game.moveBullets = function() {
 	function getBulletIsOutsideOfCanvasBorder(bullet) {
 		return bullet.y + bullet.radius < 0;
 	}
-};
-
-game.getRandomColor = function() {
-	var letters = '0123456789ABCDEF'.split('');
-	var color = '#';
-	for (var i = 0; i < 6; i++) {
-		color += letters[Math.floor(Math.random() * 16)];
-	}
-	return color;
 };
 
 game.getCopyOfWeaponAtCurrentWeaponPosition = function() {

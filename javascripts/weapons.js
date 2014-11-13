@@ -48,3 +48,7 @@ game.weapons.other = {
 			isChargable: false,
 			image: game.images.otherBullet.image
 		};
+
+
+
+

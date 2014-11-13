@@ -12,6 +12,8 @@ game.images = (function() {
 	shipImage.src = "sprites/ship_framess.png";
 	var ship = {
 		image: shipImage,
+		frameWidth: 92,
+		frameHeight: 108,
 		numberOfFrames: 3
 	};
 
