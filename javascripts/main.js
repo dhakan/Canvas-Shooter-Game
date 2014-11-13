@@ -6,6 +6,7 @@ $(function() {
 		game.addKeyListeners();
 		setInterval(game.runGameLogicLoop, 1000 / 60);
 		game.render.startRendering();
+		// setInterval(game.render.changeAnimationFrames, 200);
 		// setInterval(game.addEnemyBlock, 2000);
 	}());
 });

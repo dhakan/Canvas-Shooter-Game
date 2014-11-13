@@ -3,26 +3,27 @@ var game = (function () {
 		context = canvas.getContext("2d");
 
 	var directions = {
-		up: "up",
-		down: "down",
-		left: "left",
-		right: "right"
+		UP: "up",
+		DOWN: "down",
+		LEFT: "left",
+		RIGHT: "right"
 	};
 
 	var keyCodes = {
-		up: 38,
-		down: 40,
-		left: 37,
-		right: 39,
-		space: 32,
-		q: 81,
-		e: 69
+		UP: 38,
+		DOWN: 40,
+		LEFT: 37,
+		RIGHT: 39,
+		SPACE: 32,
+		Q: 81,
+		E: 69
 	};
 
-	var bullets = [],
-		bulletType = {
-			circle: "circle",
-			rectangle: "rectangle"
+	var bullets = [];
+
+	var geometryType = {
+			CIRCLE: "circle",
+			RECTANGLE: "rectangle"
 		};
 
 	var enemyBlocks = {},
@@ -38,7 +39,7 @@ var game = (function () {
 		directions: directions,
 		keyCodes: keyCodes,
 		bullets: bullets,
-		bulletType: bulletType,
+		geometryType: geometryType,
 		enemyBlocks: enemyBlocks,
 		collision: collision,
 		render: render,

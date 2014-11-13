@@ -9,7 +9,7 @@ game.images = (function() {
 	};
 
 	var shipImage = new Image();
-	shipImage.src = "sprites/ship_framess.png";
+	shipImage.src = "sprites/ship_frames.png";
 	var ship = {
 		image: shipImage,
 		frameWidth: 92,
@@ -18,9 +18,12 @@ game.images = (function() {
 	};
 
 	var normalBulletImage = new Image();
-	normalBulletImage.src = "sprites/bullet_normal.gif";
+	normalBulletImage.src = "sprites/bullet_normal_frames.gif";
 	var normalBullet = {
-		image: normalBulletImage
+		image: normalBulletImage,
+		frameWidth: 45 / 3,
+		frameHeight: 27,
+		numberOfFrames: 3
 	};
 
 	var bombBulletImage = new Image();

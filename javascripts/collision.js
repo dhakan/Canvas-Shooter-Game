@@ -30,20 +30,20 @@ game.collision.getCollidingEnemyBlocksIds = function(bullet) {
 	return collidingEnemyBlocksIds;
 
 	function getBulletIsCollidingWithEnemyBlock(bullet, block) {
-		if (bullet.type === game.bulletType.circle) {
+		if (bullet.geometryType === game.geometryType.CIRCLE) {
 			return getCircleIsCollidingWithRectangle(bullet, block);
-		} else if (bullet.type === game.bulletType.rectangle) {
+		} else if (bullet.geometryType === game.geometryType.RECTANGLE) {
 			return getRectangleIsCollidingWithRectangle(bullet, block);
 		}
 	}
 
 	function getCircleIsCollidingWithRectangle(circle, rectangle) {
-		var rectangleMiddleX = rectangle.x + rectangle.width / 2,
-			rectangleMiddleY = rectangle.y + rectangle.height / 2;
+		var rectangleMiddleX = rectangle.position.x + rectangle.width / 2,
+			rectangleMiddleY = rectangle.position.y + rectangle.height / 2;
 
 		var distanceFromMiddleOfCircleToMiddleOfRectangle = {
-			x: Math.abs(circle.x - rectangleMiddleX),
-			y: Math.abs(circle.y - rectangleMiddleY)
+			x: Math.abs(circle.position.x - rectangleMiddleX),
+			y: Math.abs(circle.position.y - rectangleMiddleY)
 		};
 
 		if (distanceFromMiddleOfCircleToMiddleOfRectangle.x > (rectangle.width / 2 + circle.radius)) {
@@ -68,9 +68,11 @@ game.collision.getCollidingEnemyBlocksIds = function(bullet) {
 	}
 
 	function getRectangleIsCollidingWithRectangle(rectangle1, rectangle2) {
-		return rectangle1.x < rectangle2.x + rectangle2.width &&
-			rectangle1.x + rectangle1.width > rectangle2.x &&
-			rectangle1.y < rectangle2.y + rectangle2.height &&
-			rectangle1.height + rectangle1.y > rectangle2.y;
+		console.log(rectangle1);
+
+		return rectangle1.position.x < rectangle2.position.x + rectangle2.width &&
+			rectangle1.position.x + rectangle1.width > rectangle2.position.x &&
+			rectangle1.position.y < rectangle2.y + rectangle2.height &&
+			rectangle1.height + rectangle1.position.y > rectangle2.position.y;
 	}
 };

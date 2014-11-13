@@ -22,12 +22,17 @@ game.render.renderPlayer = function() {
 
 game.render.renderBullets = function() {
 	for (var i = 0; i < game.bullets.length; i++) {
-		var bullet = game.bullets[i];
+		var bullet = game.bullets[i],
+			sourceImageFrameXPosition = bullet.currentImageFrameIndex * bullet.image.frameWidth;
 
-		if (bullet.type === game.bulletType.circle) {
-			game.canvasContext.drawImage(bullet.image, bullet.x - bullet.radius, bullet.y - bullet.radius, bullet.radius * 2, bullet.radius * 2);
-		} else if (bullet.type === game.bulletType.rectangle) {
-			game.canvasContext.drawImage(bullet.image, bullet.x, bullet.y, bullet.width, bullet.height);
+		if (bullet.geometryType === game.geometryType.RECTANGLE) {
+
+			game.canvasContext.drawImage(bullet.image.image, 
+		sourceImageFrameXPosition, 0, bullet.image.frameWidth, bullet.image.frameHeight, 
+		bullet.position.x, bullet.position.y, bullet.width, bullet.height);
+
+		} else if (bullet.geometryType === game.geometryType.CIRCLE) {
+			game.canvasContext.drawImage(bullet.image.image, bullet.position.x - bullet.radius, bullet.position.y - bullet.radius, bullet.radius * 2, bullet.radius * 2);
 		}
 	}
 };
@@ -37,17 +42,26 @@ game.render.renderEnemyBlocks = function() {
 
 	for (var i = 0; i < enemyBlocksIds.length; i++) {
 		var enemyBlock = game.enemyBlocks[enemyBlocksIds[i]];
-		game.canvasContext.drawImage(enemyBlock.image, enemyBlock.x, enemyBlock.y, enemyBlock.width, enemyBlock.height);
+		game.canvasContext.drawImage(enemyBlock.image, enemyBlock.position.x, enemyBlock.position.y, enemyBlock.width, enemyBlock.height);
 	}
 };
 
 game.render.changePlayerImageFrameAccordingToMovingDirection = function(direction) {
-	if (direction === game.directions.left) {
+	if (direction === game.directions.LEFT) {
 		game.player.currentImageFrameIndex = 0;
-	} else if (direction === game.directions.right) {
+	} else if (direction === game.directions.RIGHT) {
 		game.player.currentImageFrameIndex = 2;
 	} else {
 		game.player.currentImageFrameIndex = 1;
+	}
+};
+
+game.render.changeAnimationFrames = function() {
+	for (var i = 0; i < game.bullets.length; i++) {
+		var bullet = game.bullets[i];
+		if (bullet.currentImageFrameIndex < bullet.image.numberOfFrames - 1) {
+			bullet.currentImageFrameIndex++;
+		}
 	}
 };
 

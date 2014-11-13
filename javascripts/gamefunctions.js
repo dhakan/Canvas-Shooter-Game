@@ -22,8 +22,10 @@ game.setUpEnemyBarricade = function() {
 				hp: currentRowEnemyHP,
 				width: currentRowEnemyHP,
 				height: currentRowEnemyHP,
-				x: currentRowEnemyBlockXPosition,
-				y: currentRowEnemyBlockYPosition,
+				position: {
+					x: currentRowEnemyBlockXPosition,
+					y: currentRowEnemyBlockYPosition
+				},
 				image: game.images.normalEnemy.image
 			};
 
@@ -51,8 +53,10 @@ game.addEnemyBlock = function() {
 		hp: enemyHP,
 		width: enemyHP,
 		height: enemyHP,
-		x: lastEnemyBlock.x,
-		y: lastEnemyBlock.y + lastEnemyBlock.height,
+		position: {
+			x: lastEnemyBlock.position.x,
+			y: lastEnemyBlock.position.y + lastEnemyBlock.height
+		},
 		image: game.images.normalEnemy.image
 	};
 	game.enemyBlocks[enemyBlock.id] = enemyBlock;
@@ -65,13 +69,13 @@ game.addEnemyBlock = function() {
 		for (var enemyBlockId in game.enemyBlocks) {
 			var enemyBlock = game.enemyBlocks[enemyBlockId];
 
-			if (enemyBlock.x > lastEnemyBlockXPosition) {
-				lastEnemyBlockXPosition = enemyBlock.x;
+			if (enemyBlock.position.x > lastEnemyBlockXPosition) {
+				lastEnemyBlockXPosition = enemyBlock.position.x;
 				lastEnemyBlock = enemyBlock;
 			}
 
-			if (enemyBlock.y > lastEnemyBlockYPosition) {
-				lastEnemyBlockYPosition = enemyBlock.y;
+			if (enemyBlock.position.y > lastEnemyBlockYPosition) {
+				lastEnemyBlockYPosition = enemyBlock.position.y;
 				lastEnemyBlock = enemyBlock;
 			}
 		}
@@ -81,15 +85,18 @@ game.addEnemyBlock = function() {
 
 game.moveBullets = function() {
 	for (var bulletIndex = 0; bulletIndex < game.bullets.length; bulletIndex++) {
+		var bullet = game.bullets[bulletIndex];
 
-		var collidingEnemyBlocksIds = game.collision.getCollidingEnemyBlocksIds(game.bullets[bulletIndex]);
+		var collidingEnemyBlocksIds = game.collision.getCollidingEnemyBlocksIds(bullet);
+
+		console.log("Collisions: " + collidingEnemyBlocksIds.length);
 
 		if (collidingEnemyBlocksIds.length > 0) {
 			updateHPOfObjectsInCollision(bulletIndex, collidingEnemyBlocksIds);
-		} else if (getBulletIsOutsideOfCanvasBorder(game.bullets[bulletIndex])) {
+		} else if (getBulletIsOutsideOfCanvasBorder(bullet)) {
 			killBullet(bulletIndex);
 		} else {
-			game.bullets[bulletIndex].y -= game.bullets[bulletIndex].movingSpeed;
+			bullet.position.y -= bullet.movingSpeed;
 		}
 	}
 
@@ -126,26 +133,28 @@ game.moveBullets = function() {
 	}
 
 	function getBulletIsOutsideOfCanvasBorder(bullet) {
-		return bullet.y + bullet.radius < 0;
+		if (bullet.geometryType === game.geometryType.CIRCLE) {
+			return bullet.position.y + bullet.radius < 0;
+		} else if (bullet.geometryType === game.geometryType.RECTANGLE) {
+			return bullet.position.y + bullet.height < 0;
+		}
 	}
 };
 
 game.getCopyOfWeaponAtCurrentWeaponPosition = function() {
-	var weaponAtCurrentWeaponPosition = game.player.weapons[game.player.selectedWeaponIndex];
+	return _.clone(game.weapons.normal);
 
-	var copyOfCurrentWeapon = {
-		name: weaponAtCurrentWeaponPosition.name,
-		type: weaponAtCurrentWeaponPosition.type,
-		radius: weaponAtCurrentWeaponPosition.radius,
-		x: weaponAtCurrentWeaponPosition.x,
-		y: weaponAtCurrentWeaponPosition.y,
-		width: weaponAtCurrentWeaponPosition.width,
-		height: weaponAtCurrentWeaponPosition.height,
-		damage: weaponAtCurrentWeaponPosition.damage,
-		movingSpeed: weaponAtCurrentWeaponPosition.movingSpeed,
-		isChargable: weaponAtCurrentWeaponPosition.isChargable,
-		image: weaponAtCurrentWeaponPosition.image
-	};
-
-	return copyOfCurrentWeapon;
+	// var copyOfCurrentWeapon = {
+	// 	name: weaponAtCurrentWeaponPosition.name,
+	// 	geometryType: weaponAtCurrentWeaponPosition.geometryType,
+	// 	radius: weaponAtCurrentWeaponPosition.radius,
+	// 	position: weaponAtCurrentWeaponPosition.position,
+	// 	width: weaponAtCurrentWeaponPosition.width,
+	// 	height: weaponAtCurrentWeaponPosition.height,
+	// 	damage: weaponAtCurrentWeaponPosition.damage,
+	// 	movingSpeed: weaponAtCurrentWeaponPosition.movingSpeed,
+	// 	isChargable: weaponAtCurrentWeaponPosition.isChargable,
+	// 	image: weaponAtCurrentWeaponPosition.image,
+	// 	currentImageFrameIndex: weaponAtCurrentWeaponPosition.currentImageFrameIndex
+	// };
 };
