@@ -15,8 +15,8 @@ game.render.renderBackground = function() {
 game.render.renderPlayer = function() {
 	var sourceImageFrameXPosition = game.player.currentImageFrameIndex * game.player.image.frameWidth;
 
-	game.canvasContext.drawImage(game.player.image.image, 
-		sourceImageFrameXPosition, 0, game.player.image.frameWidth, game.player.image.frameHeight, 
+	game.canvasContext.drawImage(game.player.image.image,
+		sourceImageFrameXPosition, 0, game.player.image.frameWidth, game.player.image.frameHeight,
 		game.player.position.x, game.player.position.y, game.player.width, game.player.height);
 };
 
@@ -27,9 +27,9 @@ game.render.renderBullets = function() {
 
 		if (bullet.geometryType === game.geometryType.RECTANGLE) {
 
-			game.canvasContext.drawImage(bullet.image.image, 
-		sourceImageFrameXPosition, 0, bullet.image.frameWidth, bullet.image.frameHeight, 
-		bullet.position.x, bullet.position.y, bullet.width, bullet.height);
+			game.canvasContext.drawImage(bullet.image.image,
+				sourceImageFrameXPosition, 0, bullet.image.frameWidth, bullet.image.frameHeight,
+				bullet.position.x, bullet.position.y, bullet.width, bullet.height);
 
 		} else if (bullet.geometryType === game.geometryType.CIRCLE) {
 			game.canvasContext.drawImage(bullet.image.image, bullet.position.x - bullet.radius, bullet.position.y - bullet.radius, bullet.radius * 2, bullet.radius * 2);
@@ -61,6 +61,8 @@ game.render.changeAnimationFrames = function() {
 		var bullet = game.bullets[i];
 		if (bullet.currentImageFrameIndex < bullet.image.numberOfFrames - 1) {
 			bullet.currentImageFrameIndex++;
+		} else {
+			bullet.currentImageFrameIndex--;
 		}
 	}
 };
@@ -73,14 +75,14 @@ function renderEverything() {
 	game.render.renderPlayer();
 	game.render.renderBullets();
 	game.render.renderEnemyBlocks();
-};
+}
 
 /* PAUL IRISH ANIMATION OPTIMIZATION */
 window.requestAnimFrame = (function() {
-  return  window.requestAnimationFrame       ||
-          window.webkitRequestAnimationFrame ||
-          window.mozRequestAnimationFrame    ||
-          function(callback){
-            window.setTimeout(callback, 1000 / 60);
-          };
+	return window.requestAnimationFrame ||
+		window.webkitRequestAnimationFrame ||
+		window.mozRequestAnimationFrame ||
+		function(callback) {
+			window.setTimeout(callback, 1000 / 60);
+		};
 })();

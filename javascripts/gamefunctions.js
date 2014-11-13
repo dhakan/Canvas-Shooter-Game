@@ -89,8 +89,6 @@ game.moveBullets = function() {
 
 		var collidingEnemyBlocksIds = game.collision.getCollidingEnemyBlocksIds(bullet);
 
-		console.log("Collisions: " + collidingEnemyBlocksIds.length);
-
 		if (collidingEnemyBlocksIds.length > 0) {
 			updateHPOfObjectsInCollision(bulletIndex, collidingEnemyBlocksIds);
 		} else if (getBulletIsOutsideOfCanvasBorder(bullet)) {
@@ -142,7 +140,12 @@ game.moveBullets = function() {
 };
 
 game.getCopyOfWeaponAtCurrentWeaponPosition = function() {
-	return _.clone(game.weapons.normal);
+	var clonedPosition = _.clone(game.weapons.normal.position);
+	var clonedWeapon = _.clone(game.weapons.normal);
+	clonedWeapon.position = clonedPosition;
+	return clonedWeapon;
+
+	// var weaponAtCurrentWeaponPosition = game.player.weapons[game.player.selectedWeaponIndex];
 
 	// var copyOfCurrentWeapon = {
 	// 	name: weaponAtCurrentWeaponPosition.name,
@@ -157,4 +160,6 @@ game.getCopyOfWeaponAtCurrentWeaponPosition = function() {
 	// 	image: weaponAtCurrentWeaponPosition.image,
 	// 	currentImageFrameIndex: weaponAtCurrentWeaponPosition.currentImageFrameIndex
 	// };
+
+	// return copyOfCurrentWeapon;
 };

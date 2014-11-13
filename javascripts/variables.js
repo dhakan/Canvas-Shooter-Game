@@ -1,4 +1,4 @@
-var game = (function () {
+var game = (function() {
 	var canvas = document.querySelector("canvas"),
 		context = canvas.getContext("2d");
 
@@ -19,12 +19,12 @@ var game = (function () {
 		E: 69
 	};
 
-	var bullets = [];
-
 	var geometryType = {
-			CIRCLE: "circle",
-			RECTANGLE: "rectangle"
-		};
+		CIRCLE: "circle",
+		RECTANGLE: "rectangle"
+	};
+
+	var bullets = [];
 
 	var enemyBlocks = {},
 		enemyIdCounter = 0;

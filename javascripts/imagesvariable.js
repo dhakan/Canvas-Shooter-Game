@@ -33,7 +33,7 @@ game.images = (function() {
 	};
 
 	var otherBulletImage = new Image();
-	otherBulletImage.src = "sprites/bullet_other.gif"
+	otherBulletImage.src = "sprites/bullet_other.gif";
 	var otherBullet = {
 		image: otherBulletImage
 	};

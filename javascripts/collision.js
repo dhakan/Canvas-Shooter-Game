@@ -68,11 +68,10 @@ game.collision.getCollidingEnemyBlocksIds = function(bullet) {
 	}
 
 	function getRectangleIsCollidingWithRectangle(rectangle1, rectangle2) {
-		console.log(rectangle1);
 
 		return rectangle1.position.x < rectangle2.position.x + rectangle2.width &&
 			rectangle1.position.x + rectangle1.width > rectangle2.position.x &&
-			rectangle1.position.y < rectangle2.y + rectangle2.height &&
+			rectangle1.position.y < rectangle2.position.y + rectangle2.height &&
 			rectangle1.height + rectangle1.position.y > rectangle2.position.y;
 	}
 };
