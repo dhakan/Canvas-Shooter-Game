@@ -139,9 +139,10 @@ game.moveBullets = function() {
 	}
 };
 
+/* TODO Implement generalized solution for all kinds of weapon combinations */
 game.getCopyOfWeaponAtCurrentWeaponPosition = function() {
 	var clonedPosition = _.clone(game.weapons.normal.position);
-	var clonedWeapon = _.clone(game.weapons.normal);
+	var clonedWeapon = _.clone(game.player.weapons[game.player.selectedWeaponIndex]);
 	clonedWeapon.position = clonedPosition;
 	return clonedWeapon;
 

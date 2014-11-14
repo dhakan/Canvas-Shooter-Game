@@ -18,6 +18,13 @@ game.createWeapon = function(name, geometryType, damage, movingSpeed, isChargabl
 var normal = game.createWeapon("normal_bullet", game.geometryType.RECTANGLE, 10, 6, true, game.images.normalBullet);
 normal.width = 25;
 normal.height = 50;
+normal.updateAnimation = function() {
+		if (this.currentImageFrameIndex < this.image.numberOfFrames - 1) {
+			this.currentImageFrameIndex++;
+		} else {
+			this.currentImageFrameIndex--;
+		}
+	};
 
 var bomb = game.createWeapon("bomb_bullet", game.geometryType.RECTANGLE, 300, 6, false, game.images.bombBullet);
 bomb.width = 50;

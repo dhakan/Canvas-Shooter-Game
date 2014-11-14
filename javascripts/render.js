@@ -58,12 +58,7 @@ game.render.changePlayerImageFrameAccordingToMovingDirection = function(directio
 
 game.render.changeAnimationFrames = function() {
 	for (var i = 0; i < game.bullets.length; i++) {
-		var bullet = game.bullets[i];
-		if (bullet.currentImageFrameIndex < bullet.image.numberOfFrames - 1) {
-			bullet.currentImageFrameIndex++;
-		} else {
-			bullet.currentImageFrameIndex--;
-		}
+		game.bullets[i].updateAnimation();
 	}
 };
 
