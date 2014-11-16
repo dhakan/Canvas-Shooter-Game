@@ -145,22 +145,4 @@ game.getCopyOfWeaponAtCurrentWeaponPosition = function() {
 	var clonedWeapon = _.clone(game.player.weapons[game.player.selectedWeaponIndex]);
 	clonedWeapon.position = clonedPosition;
 	return clonedWeapon;
-
-	// var weaponAtCurrentWeaponPosition = game.player.weapons[game.player.selectedWeaponIndex];
-
-	// var copyOfCurrentWeapon = {
-	// 	name: weaponAtCurrentWeaponPosition.name,
-	// 	geometryType: weaponAtCurrentWeaponPosition.geometryType,
-	// 	radius: weaponAtCurrentWeaponPosition.radius,
-	// 	position: weaponAtCurrentWeaponPosition.position,
-	// 	width: weaponAtCurrentWeaponPosition.width,
-	// 	height: weaponAtCurrentWeaponPosition.height,
-	// 	damage: weaponAtCurrentWeaponPosition.damage,
-	// 	movingSpeed: weaponAtCurrentWeaponPosition.movingSpeed,
-	// 	isChargable: weaponAtCurrentWeaponPosition.isChargable,
-	// 	image: weaponAtCurrentWeaponPosition.image,
-	// 	currentImageFrameIndex: weaponAtCurrentWeaponPosition.currentImageFrameIndex
-	// };
-
-	// return copyOfCurrentWeapon;
 };

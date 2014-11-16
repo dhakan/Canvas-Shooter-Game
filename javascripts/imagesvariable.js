@@ -29,7 +29,10 @@ game.images = (function() {
 	var bombBulletImage = new Image();
 	bombBulletImage.src = "sprites/bullet_bomb.gif";
 	var bombBullet = {
-		image: bombBulletImage
+		image: bombBulletImage,
+		frameWidth: 190 / 7,
+		frameHeight: 63,
+		numberOfFrames: 1
 	};
 
 	var otherBulletImage = new Image();
