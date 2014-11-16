@@ -26,7 +26,7 @@ var game = (function() {
 
 	var bullets = [];
 
-	var enemyBlocks = {},
+	var enemies = {},
 		enemyIdCounter = 0;
 
 	var collision = {};
@@ -40,7 +40,7 @@ var game = (function() {
 		keyCodes: keyCodes,
 		bullets: bullets,
 		geometryType: geometryType,
-		enemyBlocks: enemyBlocks,
+		enemies: enemies,
 		collision: collision,
 		render: render,
 		getNewEnemyId: function() {

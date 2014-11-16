@@ -14,22 +14,22 @@ game.collision.playerIsToTheRightOfCanvasLeftBorder = function() {
 	return game.player.position.x > 0;
 };
 
-game.collision.getCollidingEnemyBlocksIds = function(bullet) {
-	var collidingEnemyBlocksIds = [];
+game.collision.getCollidingEnemiesIds = function(bullet) {
+	var collidingEnemiesIds = [];
 
-	var enemyBlocksIds = Object.keys(game.enemyBlocks);
+	var enemiesIds = Object.keys(game.enemies);
 
-	for (var i = 0; i < enemyBlocksIds.length; i++) {
-		var enemyBlock = game.enemyBlocks[enemyBlocksIds[i]];
+	for (var i = 0; i < enemiesIds.length; i++) {
+		var enemy = game.enemies[enemiesIds[i]];
 
-		if (getBulletIsCollidingWithEnemyBlock(bullet, enemyBlock)) {
-			collidingEnemyBlocksIds.push(enemyBlock.id);
+		if (getBulletIsCollidingWithEnemy(bullet, enemy)) {
+			collidingEnemiesIds.push(enemy.id);
 		}
 	}
 
-	return collidingEnemyBlocksIds;
+	return collidingEnemiesIds;
 
-	function getBulletIsCollidingWithEnemyBlock(bullet, block) {
+	function getBulletIsCollidingWithEnemy(bullet, block) {
 		if (bullet.geometryType === game.geometryType.CIRCLE) {
 			return getCircleIsCollidingWithRectangle(bullet, block);
 		} else if (bullet.geometryType === game.geometryType.RECTANGLE) {

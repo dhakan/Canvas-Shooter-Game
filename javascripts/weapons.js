@@ -19,7 +19,6 @@ var normal = game.createWeapon("normal_bullet", game.geometryType.RECTANGLE, 10,
 normal.width = 25;
 normal.height = 50;
 normal.updateAnimation = function() {
-	console.log(this.currentImageFrameIndex);
 	if (this.currentImageFrameIndex < this.image.numberOfFrames - 1) {
 		this.currentImageFrameIndex++;
 	} else {
@@ -48,7 +47,6 @@ other.updateAnimation = function() {
 		this.currentImageFrameIndex--;
 	}
 };
-
 
 game.weapons = {
 	normal: normal,

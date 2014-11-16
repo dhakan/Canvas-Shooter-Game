@@ -37,12 +37,12 @@ game.render.renderBullets = function() {
 	}
 };
 
-game.render.renderEnemyBlocks = function() {
-	var enemyBlocksIds = Object.keys(game.enemyBlocks);
+game.render.renderEnemies = function() {
+	var enemiesIds = Object.keys(game.enemies);
 
-	for (var i = 0; i < enemyBlocksIds.length; i++) {
-		var enemyBlock = game.enemyBlocks[enemyBlocksIds[i]];
-		game.canvasContext.drawImage(enemyBlock.image, enemyBlock.position.x, enemyBlock.position.y, enemyBlock.width, enemyBlock.height);
+	for (var i = 0; i < enemiesIds.length; i++) {
+		var enemy = game.enemies[enemiesIds[i]];
+		game.canvasContext.drawImage(enemy.image.image, enemy.position.x, enemy.position.y, enemy.width, enemy.height);
 	}
 };
 
@@ -69,7 +69,7 @@ function renderEverything() {
 	game.render.renderBackground();
 	game.render.renderPlayer();
 	game.render.renderBullets();
-	game.render.renderEnemyBlocks();
+	game.render.renderEnemies();
 }
 
 /* PAUL IRISH ANIMATION OPTIMIZATION */

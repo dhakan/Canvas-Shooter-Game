@@ -1,6 +1,7 @@
 game.runGameLogicLoop = function() {
 	game.player.move();
 	game.moveBullets();
+	game.moveEnemies();
 
 	if (game.player.isCharging) {
 		game.player.selectedWeapon.width += 0.50;
@@ -8,78 +9,22 @@ game.runGameLogicLoop = function() {
 	}
 };
 
-game.setUpEnemyBarricade = function() {
-	var currentRowEnemyBlockYPosition = 50;
+game.spawnNormalEnemies = function() {
 
-	for (var row = 0; row < 5; row++) {
-		var currentRowEnemyBlockXPosition = 50,
-			newBlockFitsOnRow = true,
-			currentRowEnemyHP = Math.ceil(Math.random() * 20) + 15;
+	var enemyXPosition = Math.floor(Math.random() * (game.canvas.width - 50)),
+		enemyYPosition = 0;
 
-		while (newBlockFitsOnRow) {
-			var enemyBlock = {
-				id: game.getNewEnemyId(),
-				hp: currentRowEnemyHP,
-				width: currentRowEnemyHP,
-				height: currentRowEnemyHP,
-				position: {
-					x: currentRowEnemyBlockXPosition,
-					y: currentRowEnemyBlockYPosition
-				},
-				image: game.images.normalEnemy.image
-			};
+	for (var i = 0; i < 5; i++) {
 
-			if (getBlockFitsOnCurrentRow(enemyBlock.width)) {
-				game.enemyBlocks[enemyBlock.id] = enemyBlock;
-				currentRowEnemyBlockXPosition += enemyBlock.width;
-			} else {
-				newBlockFitsOnRow = false;
-				currentRowEnemyBlockYPosition = currentRowEnemyBlockYPosition + enemyBlock.height;
-			}
-		}
-	}
+		var enemy = game.createEnemy("normal_enemy", game.geometryType.RECTANGLE,
+			enemyXPosition, enemyYPosition, 50, 3, game.images.normalEnemy);
 
-	function getBlockFitsOnCurrentRow(enemyBlockWidth) {
-		return game.canvas.width - (currentRowEnemyBlockXPosition + enemyBlockWidth) >= 50;
-	}
-};
+		enemy.width = 50;
+		enemy.height = 50;
 
-game.addEnemyBlock = function() {
-	var lastEnemyBlock = getLastEnemyBlock(),
-		enemyHP = Math.ceil(Math.random() * 50) + 20;
+		game.enemies[enemy.id] = enemy;
 
-	var enemyBlock = {
-		id: game.getNewEnemyId(),
-		hp: enemyHP,
-		width: enemyHP,
-		height: enemyHP,
-		position: {
-			x: lastEnemyBlock.position.x,
-			y: lastEnemyBlock.position.y + lastEnemyBlock.height
-		},
-		image: game.images.normalEnemy.image
-	};
-	game.enemyBlocks[enemyBlock.id] = enemyBlock;
-
-	function getLastEnemyBlock() {
-		var lastEnemyBlock = {},
-			lastEnemyBlockXPosition = 0,
-			lastEnemyBlockYPosition = 0;
-
-		for (var enemyBlockId in game.enemyBlocks) {
-			var enemyBlock = game.enemyBlocks[enemyBlockId];
-
-			if (enemyBlock.position.x > lastEnemyBlockXPosition) {
-				lastEnemyBlockXPosition = enemyBlock.position.x;
-				lastEnemyBlock = enemyBlock;
-			}
-
-			if (enemyBlock.position.y > lastEnemyBlockYPosition) {
-				lastEnemyBlockYPosition = enemyBlock.position.y;
-				lastEnemyBlock = enemyBlock;
-			}
-		}
-		return lastEnemyBlock;
+		enemyYPosition -= enemy.height;
 	}
 };
 
@@ -87,10 +32,10 @@ game.moveBullets = function() {
 	for (var bulletIndex = 0; bulletIndex < game.bullets.length; bulletIndex++) {
 		var bullet = game.bullets[bulletIndex];
 
-		var collidingEnemyBlocksIds = game.collision.getCollidingEnemyBlocksIds(bullet);
+		var collidingEnemiesIds = game.collision.getCollidingEnemiesIds(bullet);
 
-		if (collidingEnemyBlocksIds.length > 0) {
-			updateHPOfObjectsInCollision(bulletIndex, collidingEnemyBlocksIds);
+		if (collidingEnemiesIds.length > 0) {
+			updateHPOfObjectsInCollision(bulletIndex, collidingEnemiesIds);
 		} else if (getBulletIsOutsideOfCanvasBorder(bullet)) {
 			killBullet(bulletIndex);
 		} else {
@@ -98,12 +43,12 @@ game.moveBullets = function() {
 		}
 	}
 
-	function updateHPOfObjectsInCollision(bulletIndex, collidingEnemyBlocksIds) {
+	function updateHPOfObjectsInCollision(bulletIndex, collidingEnemiesIds) {
 		var bullet = game.bullets[bulletIndex],
 			accumulatedDamageDoneToBulletInAllBlockCollisions = 0;
 
-		for (var i = 0; i < collidingEnemyBlocksIds.length; i++) {
-			reduceEnemyBlockHP(bullet, collidingEnemyBlocksIds[i]);
+		for (var i = 0; i < collidingEnemiesIds.length; i++) {
+			reduceEnemyBlockHP(bullet, collidingEnemiesIds[i]);
 		}
 
 		bullet.damage -= accumulatedDamageDoneToBulletInAllBlockCollisions;
@@ -112,16 +57,16 @@ game.moveBullets = function() {
 			killBullet(bulletIndex);
 		}
 
-		function reduceEnemyBlockHP(bullet, enemyBlockId) {
-			var enemyBlock = game.enemyBlocks[enemyBlockId],
-				damageDoneToBulletInBlockCollision = enemyBlock.hp;
+		function reduceEnemyBlockHP(bullet, enemyId) {
+			var enemy = game.enemies[enemyId],
+				damageDoneToBulletInBlockCollision = enemy.hp;
 
-			enemyBlock.hp -= bullet.damage;
+			enemy.hp -= bullet.damage;
 
 			accumulatedDamageDoneToBulletInAllBlockCollisions += damageDoneToBulletInBlockCollision;
 
-			if (enemyBlock.hp <= 0) {
-				delete game.enemyBlocks[enemyBlockId];
+			if (enemy.hp <= 0) {
+				delete game.enemies[enemyId];
 			}
 		}
 	}
@@ -136,6 +81,27 @@ game.moveBullets = function() {
 		} else if (bullet.geometryType === game.geometryType.RECTANGLE) {
 			return bullet.position.y + bullet.height < 0;
 		}
+	}
+};
+
+game.moveEnemies = function() {
+	var enemiesIds = Object.keys(game.enemies);
+
+	for (var i = 0; i < enemiesIds.length; i++) {
+		var enemy = game.enemies[enemiesIds[i]];
+		enemy.position.y += enemy.movingSpeed;
+
+		if (getEnemyIsOutsideOfCanvasBorder(enemy)) {
+			killEnemy(enemy.id);
+		}
+	}
+
+	function killEnemy(enemyId) {
+		delete game.enemies[enemyId];
+	}
+
+	function getEnemyIsOutsideOfCanvasBorder(enemy) {
+		return enemy.position.y > game.canvas.height;
 	}
 };
 
