@@ -1,5 +1,5 @@
 var game = (function() {
-	var canvas = document.querySelector("canvas"),
+	var canvas = document.querySelector("#backgroundCanvas"),
 		context = canvas.getContext("2d");
 
 	var directions = {

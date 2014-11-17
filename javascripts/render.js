@@ -40,9 +40,11 @@ game.render.renderBullets = function() {
 game.render.renderEnemies = function() {
 	var enemiesIds = Object.keys(game.enemies);
 
+	game.enemy.canvasContext.clearRect(0, 0, game.enemy.canvas.width, game.enemy.canvas.height);
+
 	for (var i = 0; i < enemiesIds.length; i++) {
 		var enemy = game.enemies[enemiesIds[i]];
-		game.canvasContext.drawImage(enemy.image.image, enemy.position.x, enemy.position.y, enemy.width, enemy.height);
+		game.enemy.canvasContext.drawImage(enemy.image.image, enemy.position.x, enemy.position.y, enemy.width, enemy.height);
 	}
 };
 

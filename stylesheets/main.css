@@ -24,5 +24,9 @@ h1 {
 }
 
 canvas {
+	position: absolute;
+}
+
+#backgroundCanvas {
 	border: 1px solid blue;
 }
