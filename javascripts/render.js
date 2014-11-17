@@ -15,7 +15,9 @@ game.render.renderBackground = function() {
 game.render.renderPlayer = function() {
 	var sourceImageFrameXPosition = game.player.currentImageFrameIndex * game.player.image.frameWidth;
 
-	game.canvasContext.drawImage(game.player.image.image,
+	game.player.canvasContext.clearRect(0, 0, game.enemy.canvas.width, game.enemy.canvas.height);
+
+	game.player.canvasContext.drawImage(game.player.image.image,
 		sourceImageFrameXPosition, 0, game.player.image.frameWidth, game.player.image.frameHeight,
 		game.player.position.x, game.player.position.y, game.player.width, game.player.height);
 };
@@ -24,6 +26,8 @@ game.render.renderBullets = function() {
 	for (var i = 0; i < game.bullets.length; i++) {
 		var bullet = game.bullets[i],
 			sourceImageFrameXPosition = bullet.currentImageFrameIndex * bullet.image.frameWidth;
+
+		game.weapon.canvasContext.clearRect(0, 0, game.enemy.canvas.width, game.enemy.canvas.height);
 
 		if (bullet.geometryType === game.geometryType.RECTANGLE) {
 

@@ -14,7 +14,6 @@ game.spawnNormalEnemies = function() {
 		enemyYPosition = -50;
 
 	for (var i = 0; i < 5; i++) {
-
 		var enemy = game.enemy.createEnemy("normal_enemy", game.geometryType.RECTANGLE,
 			enemyXPosition, enemyYPosition, 50, 3, game.images.normalEnemy);
 
