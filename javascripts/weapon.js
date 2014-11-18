@@ -1,5 +1,5 @@
 game.weapon = (function() {
-	var canvas = document.querySelector("#bulletCanvas"),
+	var canvas = document.querySelector("#weaponCanvas"),
 		context = canvas.getContext("2d");
 
 	return {

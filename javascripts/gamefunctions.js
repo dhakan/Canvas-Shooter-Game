@@ -11,7 +11,7 @@ game.runGameLogicLoop = function() {
 
 game.spawnNormalEnemies = function() {
 	var enemyXPosition = Math.floor(Math.random() * (game.canvas.width - 50)),
-		enemyYPosition = -50;
+		enemyYPosition = 0;
 
 	for (var i = 0; i < 5; i++) {
 		var enemy = game.enemy.createEnemy("normal_enemy", game.geometryType.RECTANGLE,

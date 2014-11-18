@@ -15,7 +15,7 @@ game.render.renderBackground = function() {
 game.render.renderPlayer = function() {
 	var sourceImageFrameXPosition = game.player.currentImageFrameIndex * game.player.image.frameWidth;
 
-	game.player.canvasContext.clearRect(0, 0, game.enemy.canvas.width, game.enemy.canvas.height);
+	game.player.canvasContext.clearRect(0, 0, game.player.canvas.width, game.player.canvas.height);
 
 	game.player.canvasContext.drawImage(game.player.image.image,
 		sourceImageFrameXPosition, 0, game.player.image.frameWidth, game.player.image.frameHeight,
@@ -23,20 +23,20 @@ game.render.renderPlayer = function() {
 };
 
 game.render.renderBullets = function() {
+	game.weapon.canvasContext.clearRect(0, 0, game.weapon.canvas.width, game.weapon.canvas.height);
+
 	for (var i = 0; i < game.bullets.length; i++) {
 		var bullet = game.bullets[i],
 			sourceImageFrameXPosition = bullet.currentImageFrameIndex * bullet.image.frameWidth;
 
-		game.weapon.canvasContext.clearRect(0, 0, game.enemy.canvas.width, game.enemy.canvas.height);
-
 		if (bullet.geometryType === game.geometryType.RECTANGLE) {
 
-			game.canvasContext.drawImage(bullet.image.image,
+			game.weapon.canvasContext.drawImage(bullet.image.image,
 				sourceImageFrameXPosition, 0, bullet.image.frameWidth, bullet.image.frameHeight,
 				bullet.position.x, bullet.position.y, bullet.width, bullet.height);
 
 		} else if (bullet.geometryType === game.geometryType.CIRCLE) {
-			game.canvasContext.drawImage(bullet.image.image, bullet.position.x - bullet.radius, bullet.position.y - bullet.radius, bullet.radius * 2, bullet.radius * 2);
+			game.weapon.canvasContext.drawImage(bullet.image.image, bullet.position.x - bullet.radius, bullet.position.y - bullet.radius, bullet.radius * 2, bullet.radius * 2);
 		}
 	}
 };
