@@ -1,4 +1,4 @@
-game.enemy = (function () {
+game.enemy = (function() {
 	var canvas = document.querySelector("#enemyCanvas"),
 		context = canvas.getContext("2d");
 

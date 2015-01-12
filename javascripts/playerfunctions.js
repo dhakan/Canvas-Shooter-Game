@@ -5,16 +5,16 @@ game.player.setStartPosition = function(x, y) {
 
 game.player.switchWeapon = function(direction) {
 	if (direction === "backwards") {
-		if (game.player.selectedWeaponIndex > game.weaponPosition.FIRST_WEAPON) {
+		if (game.player.selectedWeaponIndex > game.player.weaponPosition.FIRST_WEAPON) {
 			game.player.selectedWeaponIndex--;
 		} else {
-			game.player.selectedWeaponIndex = game.weaponPosition.LAST_WEAPON;
+			game.player.selectedWeaponIndex = game.player.weaponPosition.LAST_WEAPON;
 		}
 	} else if (direction === "forward") {
-		if (game.player.selectedWeaponIndex < game.weaponPosition.LAST_WEAPON) {
+		if (game.player.selectedWeaponIndex < game.player.weaponPosition.LAST_WEAPON) {
 			game.player.selectedWeaponIndex++;
 		} else {
-			game.player.selectedWeaponIndex = game.weaponPosition.FIRST_WEAPON;
+			game.player.selectedWeaponIndex = game.player.weaponPosition.FIRST_WEAPON;
 		}
 	}
 	game.player.selectedWeapon = game.getCopyOfWeaponAtCurrentWeaponPosition();

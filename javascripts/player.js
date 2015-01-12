@@ -1,4 +1,4 @@
-game.player = (function () {
+game.player = (function() {
 	var canvas = document.querySelector("#playerCanvas"),
 		context = canvas.getContext("2d");
 
@@ -22,7 +22,7 @@ game.player = (function () {
 	};
 }());
 
-game.weaponPosition = {
+game.player.weaponPosition = {
 	FIRST_WEAPON: 0,
 	LAST_WEAPON: game.player.weapons.length - 1
 };

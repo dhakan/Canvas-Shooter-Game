@@ -14,8 +14,10 @@ game.spawnNormalEnemies = function() {
 		enemyYPosition = 0;
 
 	for (var i = 0; i < 5; i++) {
+		// TODO Add weapon to enemies
+
 		var enemy = game.enemy.createEnemy("normal_enemy", game.geometryType.RECTANGLE,
-			enemyXPosition, enemyYPosition, 50, 3, game.images.normalEnemy);
+			enemyXPosition, enemyYPosition, 50, 2, game.images.normalEnemy);
 
 		enemy.width = 50;
 		enemy.height = 50;
