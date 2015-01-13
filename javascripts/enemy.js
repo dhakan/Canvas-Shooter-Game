@@ -5,7 +5,7 @@ game.enemy = (function() {
 	return {
 		canvas: canvas,
 		canvasContext: context,
-		createEnemy: function(name, geometryType, x, y, hp, movingSpeed, image) {
+		createEnemy: function(name, geometryType, x, y, hp, movingSpeed, image, weapon) {
 			var that = {
 				id: game.getNewEnemyId(),
 				name: name,
@@ -17,7 +17,8 @@ game.enemy = (function() {
 				hp: hp,
 				movingSpeed: movingSpeed,
 				image: image,
-				currentImageFrameIndex: 0
+				currentImageFrameIndex: 0,
+				weapon: weapon
 			};
 			return that;
 		}

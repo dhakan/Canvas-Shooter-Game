@@ -1,7 +1,18 @@
+game.setUpPlayer = function() {
+	setStartPosition.call(game.player, game.canvas.width / 2 - game.player.width / 2, game.canvas.height - 80);
+
+	game.player.selectedWeapon = game.player.weapons[game.player.selectedWeaponIndex];
+
+	function setStartPosition(x, y) {
+		game.player.position.x = x;
+		game.player.position.y = y;
+	}
+};
+
 game.runGameLogicLoop = function() {
 	game.player.move();
 	game.moveBullets();
-	game.moveEnemies();
+	game.enemy.moveEnemies();
 
 	if (game.player.isCharging) {
 		game.player.selectedWeapon.width += 0.50;
@@ -9,25 +20,7 @@ game.runGameLogicLoop = function() {
 	}
 };
 
-game.spawnNormalEnemies = function() {
-	var enemyXPosition = Math.floor(Math.random() * (game.canvas.width - 50)),
-		enemyYPosition = 0;
-
-	for (var i = 0; i < 5; i++) {
-		// TODO Add weapon to enemies
-
-		var enemy = game.enemy.createEnemy("normal_enemy", game.geometryType.RECTANGLE,
-			enemyXPosition, enemyYPosition, 50, 2, game.images.normalEnemy);
-
-		enemy.width = 50;
-		enemy.height = 50;
-
-		game.enemies[enemy.id] = enemy;
-
-		enemyYPosition -= enemy.height;
-	}
-};
-
+/* TODO Refactor so that ID's are not handled here, but the actual objects */
 game.moveBullets = function() {
 	for (var bulletIndex = 0; bulletIndex < game.bullets.length; bulletIndex++) {
 		var bullet = game.bullets[bulletIndex];
@@ -39,7 +32,7 @@ game.moveBullets = function() {
 		} else if (getBulletIsOutsideOfCanvasBorder(bullet)) {
 			killBullet(bulletIndex);
 		} else {
-			bullet.position.y -= bullet.movingSpeed;
+			bullet.move();
 		}
 	}
 
@@ -84,31 +77,15 @@ game.moveBullets = function() {
 	}
 };
 
-game.moveEnemies = function() {
-	var enemiesIds = Object.keys(game.enemies);
+/* TODO Implement generalized solution for all kinds of weapon combinations, also move this function to player object */
+game.getNewWeaponInstanceByIndex = function(index) {
+	var position = {
+		x: 0,
+		y: 0
+	};
 
-	for (var i = 0; i < enemiesIds.length; i++) {
-		var enemy = game.enemies[enemiesIds[i]];
-		enemy.position.y += enemy.movingSpeed;
+	var newWeapon = game.weapons.player.weaponFactory[index]();
 
-		if (getEnemyIsOutsideOfCanvasBorder(enemy)) {
-			killEnemy(enemy.id);
-		}
-	}
-
-	function killEnemy(enemyId) {
-		delete game.enemies[enemyId];
-	}
-
-	function getEnemyIsOutsideOfCanvasBorder(enemy) {
-		return enemy.position.y > game.canvas.height;
-	}
-};
-
-/* TODO Implement generalized solution for all kinds of weapon combinations */
-game.getCopyOfWeaponAtCurrentWeaponPosition = function() {
-	var clonedPosition = _.clone(game.weapons.normal.position);
-	var clonedWeapon = _.clone(game.player.weapons[game.player.selectedWeaponIndex]);
-	clonedWeapon.position = clonedPosition;
-	return clonedWeapon;
+	newWeapon.position = position;
+	return newWeapon;
 };

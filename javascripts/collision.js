@@ -1,3 +1,4 @@
+/* TODO Move player related functions to player object */
 game.collision.playerIsAboveCanvasBottomBorder = function() {
 	return game.player.position.y + game.player.height < game.canvas.height;
 };

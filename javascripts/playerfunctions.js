@@ -1,69 +1,64 @@
-game.player.setStartPosition = function(x, y) {
-	game.player.position.x = x;
-	game.player.position.y = y;
-};
-
 game.player.switchWeapon = function(direction) {
 	if (direction === "backwards") {
-		if (game.player.selectedWeaponIndex > game.player.weaponPosition.FIRST_WEAPON) {
-			game.player.selectedWeaponIndex--;
+		if (this.selectedWeaponIndex > this.weaponPosition.FIRST_WEAPON) {
+			this.selectedWeaponIndex--;
 		} else {
-			game.player.selectedWeaponIndex = game.player.weaponPosition.LAST_WEAPON;
+			this.selectedWeaponIndex = this.weaponPosition.LAST_WEAPON;
 		}
 	} else if (direction === "forward") {
-		if (game.player.selectedWeaponIndex < game.player.weaponPosition.LAST_WEAPON) {
-			game.player.selectedWeaponIndex++;
+		if (this.selectedWeaponIndex < this.weaponPosition.LAST_WEAPON) {
+			this.selectedWeaponIndex++;
 		} else {
-			game.player.selectedWeaponIndex = game.player.weaponPosition.FIRST_WEAPON;
+			this.selectedWeaponIndex = this.weaponPosition.FIRST_WEAPON;
 		}
 	}
-	game.player.selectedWeapon = game.getCopyOfWeaponAtCurrentWeaponPosition();
+	this.selectedWeapon = game.getNewWeaponInstanceByIndex(this.selectedWeaponIndex);
 };
 
 game.player.initiateChargeBeam = function() {
-	game.player.isCharging = true;
+	this.isCharging = true;
 };
 
 game.player.shootBullet = function() {
-	if (game.player.isCharging) {
-		game.player.isCharging = false;
+	if (this.isCharging) {
+		this.isCharging = false;
 	}
 
-	setSelectedWeaponXAndYPositionsAlignedWithPlayer();
+	setSelectedWeaponXAndYPositionsAlignedWithPlayer.call(this);
 
-	game.bullets.push(game.player.selectedWeapon);
+	game.bullets.push(this.selectedWeapon);
 
-	game.player.selectedWeapon = game.getCopyOfWeaponAtCurrentWeaponPosition();
+	this.selectedWeapon = game.getNewWeaponInstanceByIndex(this.selectedWeaponIndex);
 
 	function setSelectedWeaponXAndYPositionsAlignedWithPlayer() {
-		if (game.player.selectedWeapon.geometryType === game.geometryType.CIRCLE) {
-			game.player.selectedWeapon.position.x = game.player.position.x + game.player.width / 2;
-			game.player.selectedWeapon.position.y = game.player.position.y - game.player.selectedWeapon.radius;
-		} else if (game.player.selectedWeapon.geometryType === game.geometryType.RECTANGLE) {
-			game.player.selectedWeapon.position.x = game.player.position.x + game.player.width / 2 - game.player.selectedWeapon.width / 2;
-			game.player.selectedWeapon.position.y = game.player.position.y - game.player.selectedWeapon.height;
+		if (this.selectedWeapon.geometryType === game.geometryType.CIRCLE) {
+			this.selectedWeapon.position.x = this.position.x + this.width / 2;
+			this.selectedWeapon.position.y = this.position.y - this.selectedWeapon.radius;
+		} else if (this.selectedWeapon.geometryType === game.geometryType.RECTANGLE) {
+			this.selectedWeapon.position.x = this.position.x + this.width / 2 - this.selectedWeapon.width / 2;
+			this.selectedWeapon.position.y = this.position.y - this.selectedWeapon.height;
 		}
 	}
 };
 
 game.player.move = function() {
-	if (game.player.movingDirectionY === game.directions.UP &&
+	if (this.movingDirectionY === game.directions.UP &&
 		game.collision.playerIsBelowCanvasTopBorder())  {
-		game.player.position.y -= game.player.movingSpeed;
-	} else if (game.player.movingDirectionY === game.directions.DOWN &&
+		this.position.y -= this.movingSpeed;
+	} else if (this.movingDirectionY === game.directions.DOWN &&
 		game.collision.playerIsAboveCanvasBottomBorder()) {
-		game.player.position.y += game.player.movingSpeed;
+		this.position.y += this.movingSpeed;
 	}
 
-	if (game.player.movingDirectionX === undefined) {
-		game.render.changePlayerImageFrameAccordingToMovingDirection(game.player.movingDirectionX);
-	} else if (game.player.movingDirectionX === game.directions.LEFT &&
+	if (this.movingDirectionX === undefined) {
+		game.render.changePlayerImageFrameAccordingToMovingDirection(this.movingDirectionX);
+	} else if (this.movingDirectionX === game.directions.LEFT &&
 		game.collision.playerIsToTheRightOfCanvasLeftBorder()) {
-		game.player.position.x -= game.player.movingSpeed;
-		game.render.changePlayerImageFrameAccordingToMovingDirection(game.player.movingDirectionX);
-	} else if (game.player.movingDirectionX === game.directions.RIGHT &&
+		this.position.x -= this.movingSpeed;
+		game.render.changePlayerImageFrameAccordingToMovingDirection(this.movingDirectionX);
+	} else if (this.movingDirectionX === game.directions.RIGHT &&
 		game.collision.playerIsToTheLeftOfCanvasRightBorder()) {
-		game.player.position.x += game.player.movingSpeed;
-		game.render.changePlayerImageFrameAccordingToMovingDirection(game.player.movingDirectionX);
+		this.position.x += this.movingSpeed;
+		game.render.changePlayerImageFrameAccordingToMovingDirection(this.movingDirectionX);
 	}
 };

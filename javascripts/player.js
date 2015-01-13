@@ -14,7 +14,12 @@ game.player = (function() {
 		movingDirectionX: undefined,
 		movingDirectionY: undefined,
 		movingSpeed: 5,
-		weapons: [game.weapons.normal, game.weapons.bomb, game.weapons.other],
+		weapons: [
+			game.weapons.player.weaponFactory[0](),
+			game.weapons.player.weaponFactory[1](),
+			game.weapons.player.weaponFactory[2]()
+		],
+		selectedWeapon: undefined,
 		selectedWeaponIndex: 0,
 		isCharging: false,
 		image: game.images.ship,
